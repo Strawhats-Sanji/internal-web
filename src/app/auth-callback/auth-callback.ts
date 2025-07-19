@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-auth-callback',
@@ -8,28 +9,34 @@ import { CommonModule } from '@angular/common';
   templateUrl: './auth-callback.html',
   styleUrl: './auth-callback.scss'
 })
-export class AuthCallbackComponent {
+export class AuthCallbackComponent implements OnInit {
   loading = true;
   error: string | null = null;
 
-  constructor(private router: Router) {
-    // Simulate extracting payload from query or fragment
-    // In real implementation, parse window.location.search or window.location.hash
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    this.handleAuthCallback();
+  }
+
+  private async handleAuthCallback() {
     try {
-      // Example: ?name=Staff%20Name&email=staffname@summitbankng.com
-      const params = new URLSearchParams(window.location.search);
-      const name = params.get('name');
-      const email = params.get('email');
-      if (name && email) {
-        localStorage.setItem('user', JSON.stringify({ name, email }));
+      const user = await this.authService.handleAuthCallback();
+      if (user) {
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
         }, 1000);
       } else {
-        this.error = 'Invalid login response.';
+        this.error = 'Authentication failed.';
+        this.loading = false;
       }
-    } catch (e) {
-      this.error = 'Error processing login response.';
+    } catch (error) {
+      console.error('Auth callback error:', error);
+      this.error = 'Error processing authentication response.';
+      this.loading = false;
     }
   }
 }

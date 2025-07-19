@@ -45,7 +45,11 @@
     <!-- Sidebar -->
     <aside class="w-full md:w-64 flex flex-row md:flex-col items-center pt-4 md:pt-8 border-b md:border-b-0 md:border-r border-[#e2cfa2] bg-[#ede3cc] justify-center md:justify-start">
       <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="h-16 w-16 md:h-20 md:w-20 rounded-full border-4 border-primary mb-2 md:mb-4" />
-      <div class="text-base md:text-lg font-medium text-center md:text-left">Good Morning,<br><span class="font-bold">Hannan!</span></div>
+      <div class="text-base md:text-lg font-medium text-center md:text-left">
+        Good Morning,<br>
+        <span class="font-bold">{{ currentUser?.name || 'User' }}!</span>
+        <div class="text-sm text-gray-600 mt-1">{{ currentUser?.email }}</div>
+      </div>
     </aside>
 
     <!-- Main Content -->

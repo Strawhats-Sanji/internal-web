@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login-page',
@@ -11,7 +12,15 @@ import { CommonModule } from '@angular/common';
 export class LoginPageComponent {
   loading = false;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    // Redirect if already authenticated
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   onLogin(event: Event) {
     event.preventDefault();
@@ -24,11 +33,6 @@ export class LoginPageComponent {
 
   loginWithAD() {
     this.loading = true;
-    // Replace with your real access token
-    const accessToken = 'YOUR_ACCESS_TOKEN';
-    const endpoint = 'https://apigateway-test.summitbankng.com/auth/v1/redirect';
-    // Redirect with Authorization header is not possible from browser, so use backend or allow endpoint to accept token as query param if supported
-    // For now, just redirect to endpoint (token handling must be implemented securely)
-    window.location.href = endpoint;
+    this.authService.loginWithAD();
   }
 }
