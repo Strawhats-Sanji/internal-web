@@ -30,6 +30,8 @@ export class AuthService {
    */
   loginWithAD(): void {
     const loginUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}`;
+    console.log('Redirecting to AD service:', loginUrl);
+    console.log('Callback URL:', this.CALLBACK_URL);
     window.location.href = loginUrl;
   }
 
@@ -39,12 +41,17 @@ export class AuthService {
   handleAuthCallback(): Promise<User | null> {
     return new Promise((resolve, reject) => {
       try {
+        console.log('Handling auth callback...');
         const params = new URLSearchParams(window.location.search);
+        console.log('URL params:', Object.fromEntries(params.entries()));
+        
         const name = params.get('name');
         const email = params.get('email');
         const accessToken = params.get('access_token');
         const refreshToken = params.get('refresh_token');
         const expiresIn = params.get('expires_in');
+
+        console.log('Extracted params:', { name, email, accessToken: !!accessToken, refreshToken: !!refreshToken, expiresIn });
 
         if (name && email) {
           const user: User = {
@@ -55,12 +62,15 @@ export class AuthService {
             expiresAt: expiresIn ? Date.now() + (parseInt(expiresIn) * 1000) : undefined
           };
 
+          console.log('Creating user object:', user);
           this.setCurrentUser(user);
           resolve(user);
         } else {
+          console.log('Missing required params: name or email');
           reject(new Error('Invalid authentication response'));
         }
       } catch (error) {
+        console.error('Error in handleAuthCallback:', error);
         reject(error);
       }
     });

@@ -19,17 +19,23 @@ export class AuthCallbackComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log('Auth callback component initialized');
+    console.log('Current URL:', window.location.href);
+    console.log('Search params:', window.location.search);
     this.handleAuthCallback();
   }
 
   private async handleAuthCallback() {
     try {
+      console.log('Starting auth callback handling...');
       const user = await this.authService.handleAuthCallback();
       if (user) {
+        console.log('Authentication successful, user:', user);
         setTimeout(() => {
           this.router.navigate(['/dashboard']);
         }, 1000);
       } else {
+        console.log('Authentication failed - no user returned');
         this.error = 'Authentication failed.';
         this.loading = false;
       }

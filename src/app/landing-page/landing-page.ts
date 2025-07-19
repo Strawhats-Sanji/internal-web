@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -8,8 +9,19 @@ import { CommonModule } from '@angular/common';
   templateUrl: './landing-page.html',
   styleUrl: './landing-page.scss'
 })
-export class LandingPageComponent {
-  constructor(private router: Router) {}
+export class LandingPageComponent implements OnInit {
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
+
+  ngOnInit() {
+    // If user is already authenticated, redirect to dashboard
+    if (this.authService.isAuthenticated()) {
+      console.log('User already authenticated, redirecting to dashboard');
+      this.router.navigate(['/dashboard']);
+    }
+  }
 
   goToLogin() {
     this.router.navigate(['/login']);
