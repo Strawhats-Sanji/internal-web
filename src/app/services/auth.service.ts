@@ -43,26 +43,45 @@ export class AuthService {
   handleAuthCallback(): Promise<User | null> {
     return new Promise(async (resolve, reject) => {
       try {
-        console.log('Handling auth callback...');
+        console.log('=== AD SERVICE CALLBACK HANDLING ===');
+        console.log('Current URL:', window.location.href);
+        console.log('Search string:', window.location.search);
+        
         const params = new URLSearchParams(window.location.search);
-        console.log('URL params:', Object.fromEntries(params.entries()));
+        const allParams = Object.fromEntries(params.entries());
+        
+        console.log('=== ALL URL PARAMETERS ===');
+        console.log('Raw params object:', allParams);
+        console.log('Individual parameters:');
+        for (const [key, value] of params.entries()) {
+          console.log(`  ${key}:`, value);
+        }
         
         const code = params.get('code');
         const clientInfo = params.get('client_info');
+        const sessionState = params.get('session_state');
+
+        console.log('=== KEY PARAMETERS ===');
+        console.log('Authorization code:', code ? `${code.substring(0, 20)}...` : 'null');
+        console.log('Client info:', clientInfo ? `${clientInfo.substring(0, 50)}...` : 'null');
+        console.log('Session state:', sessionState);
 
         if (code) {
-          console.log('Authorization code received, exchanging for user info...');
+          console.log('=== PROCESSING AUTHORIZATION CODE FLOW ===');
           
           // Exchange authorization code for user information
           const user = await this.exchangeCodeForUserInfo(code, clientInfo || undefined);
           if (user) {
-            console.log('User info retrieved successfully:', user);
+            console.log('=== USER CREATED SUCCESSFULLY ===');
+            console.log('Final user object:', user);
             this.setCurrentUser(user);
             resolve(user);
           } else {
+            console.log('=== FAILED TO CREATE USER ===');
             reject(new Error('Failed to exchange code for user info'));
           }
         } else {
+          console.log('=== FALLBACK TO DIRECT PARAMETERS ===');
           // Fallback to direct parameters (for backward compatibility)
           const name = params.get('name');
           const email = params.get('email');
@@ -70,7 +89,7 @@ export class AuthService {
           const refreshToken = params.get('refresh_token');
           const expiresIn = params.get('expires_in');
 
-          console.log('Extracted params:', { name, email, accessToken: !!accessToken, refreshToken: !!refreshToken, expiresIn });
+          console.log('Direct params:', { name, email, accessToken: !!accessToken, refreshToken: !!refreshToken, expiresIn });
 
           if (name && email) {
             const user: User = {
@@ -81,16 +100,17 @@ export class AuthService {
               expiresAt: expiresIn ? Date.now() + (parseInt(expiresIn) * 1000) : undefined
             };
 
-            console.log('Creating user object:', user);
+            console.log('Creating user object from direct params:', user);
             this.setCurrentUser(user);
             resolve(user);
           } else {
-            console.log('Missing required params: name or email');
+            console.log('Missing required direct params: name or email');
             reject(new Error('Invalid authentication response'));
           }
         }
       } catch (error) {
-        console.error('Error in handleAuthCallback:', error);
+        console.error('=== ERROR IN AUTH CALLBACK ===');
+        console.error('Error details:', error);
         reject(error);
       }
     });
@@ -101,18 +121,33 @@ export class AuthService {
    */
   private async exchangeCodeForUserInfo(code: string, clientInfo?: string): Promise<User | null> {
     try {
-      console.log('Exchanging code for user info...');
+      console.log('=== EXCHANGING CODE FOR USER INFO ===');
+      console.log('Authorization code length:', code.length);
+      console.log('Client info provided:', !!clientInfo);
       
       // Extract user info from client_info if available
       if (clientInfo) {
+        console.log('=== PROCESSING CLIENT_INFO ===');
+        console.log('Raw client_info length:', clientInfo.length);
+        console.log('Raw client_info preview:', clientInfo.substring(0, 100) + '...');
+        
         try {
           const decodedClientInfo = JSON.parse(atob(clientInfo));
-          console.log('Decoded client info:', decodedClientInfo);
+          console.log('=== DECODED CLIENT_INFO STRUCTURE ===');
+          console.log('Full decoded client_info:', decodedClientInfo);
+          console.log('Client_info keys:', Object.keys(decodedClientInfo));
+          console.log('Client_info values:', Object.values(decodedClientInfo));
           
           // Extract user info from client_info
           // The client_info contains uid (user ID) and utid (tenant ID)
           const uid = decodedClientInfo.uid;
           const utid = decodedClientInfo.utid;
+          
+          console.log('=== EXTRACTED USER DATA ===');
+          console.log('UID:', uid);
+          console.log('UTID:', utid);
+          console.log('UID type:', typeof uid);
+          console.log('UTID type:', typeof utid);
           
           // Create a user object with the available information
           const user: User = {
@@ -124,14 +159,25 @@ export class AuthService {
             utid: utid // Store the tenant ID
           };
           
-          console.log('Created user from client_info:', user);
+          console.log('=== CREATED USER OBJECT ===');
+          console.log('Final user object:', user);
           return user;
         } catch (error) {
-          console.error('Error decoding client_info:', error);
+          console.error('=== ERROR DECODING CLIENT_INFO ===');
+          console.error('Decoding error:', error);
+          console.error('Client_info that failed to decode:', clientInfo);
         }
       }
 
       // If client_info decoding fails, make a request to your AD service to exchange the code
+      console.log('=== ATTEMPTING TOKEN EXCHANGE ===');
+      console.log('Token exchange URL:', `${environment.adService.baseUrl}/auth/v1/token`);
+      console.log('Token exchange payload:', {
+        code: code.substring(0, 20) + '...',
+        grant_type: 'authorization_code',
+        redirect_uri: this.CALLBACK_URL
+      });
+      
       const response = await fetch(`${environment.adService.baseUrl}/auth/v1/token`, {
         method: 'POST',
         headers: {
@@ -144,9 +190,16 @@ export class AuthService {
         })
       });
 
+      console.log('=== TOKEN EXCHANGE RESPONSE ===');
+      console.log('Response status:', response.status);
+      console.log('Response status text:', response.statusText);
+      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
+
       if (response.ok) {
         const data = await response.json();
-        console.log('Token exchange response:', data);
+        console.log('=== TOKEN EXCHANGE SUCCESS ===');
+        console.log('Full token response:', data);
+        console.log('Token response keys:', Object.keys(data));
         
         const user: User = {
           name: data.name || 'Authenticated User',
@@ -156,9 +209,19 @@ export class AuthService {
           expiresAt: data.expires_in ? Date.now() + (data.expires_in * 1000) : undefined
         };
         
+        console.log('=== USER FROM TOKEN EXCHANGE ===');
+        console.log('Created user from token exchange:', user);
         return user;
       } else {
-        console.error('Token exchange failed:', response.status, response.statusText);
+        console.error('=== TOKEN EXCHANGE FAILED ===');
+        console.error('Status:', response.status);
+        console.error('Status text:', response.statusText);
+        try {
+          const errorData = await response.text();
+          console.error('Error response body:', errorData);
+        } catch (e) {
+          console.error('Could not read error response body');
+        }
         return null;
       }
     } catch (error) {
