@@ -10,4 +10,5 @@ export const routes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'dashboard', component: DashboardPageComponent, canActivate: [AuthGuard] },
   { path: 'auth/callback', component: AuthCallbackComponent },
+  { path: 'auth/v1/callback', component: AuthCallbackComponent },
 ];

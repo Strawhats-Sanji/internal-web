@@ -19,7 +19,7 @@ export class AuthService {
   public currentUser$ = this.currentUserSubject.asObservable();
 
   private readonly AD_ENDPOINT = `${environment.adService.baseUrl}${environment.adService.authEndpoint}`;
-  private readonly CALLBACK_URL = `${window.location.origin}/auth/callback`;
+  private readonly CALLBACK_URL = `${window.location.origin}/auth/v1/callback`;
 
   constructor(private router: Router) {
     this.loadUserFromStorage();
