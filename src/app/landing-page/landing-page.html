@@ -1,1 +1,20 @@
-
+<div class="min-h-screen bg-gradient-to-br from-primary to-secondary flex items-center justify-center">
+  <div class="bg-white rounded-xl shadow-2xl p-8 mx-4 max-w-md w-full">
+    <div class="text-center mb-8">
+      <h1 class="text-3xl font-bold text-gray-800 mb-4">Welcome to Staff Intranet</h1>
+      <p class="text-gray-600 mb-6">Access your company resources and tools</p>
+    </div>
+    
+    <div class="space-y-4">
+      <button 
+        (click)="goToLogin()" 
+        class="w-full py-3 px-4 bg-secondary text-white font-semibold rounded-lg hover:bg-red-700 transition-colors">
+        Login to Continue
+      </button>
+      
+      <div class="text-center">
+        <p class="text-sm text-gray-500">Need help? Contact IT Support</p>
+      </div>
+    </div>
+  </div>
+</div>
