@@ -9,6 +9,8 @@ export interface User {
   accessToken?: string;
   refreshToken?: string;
   expiresAt?: number;
+  uid?: string;
+  utid?: string;
 }
 
 @Injectable({
@@ -101,21 +103,28 @@ export class AuthService {
     try {
       console.log('Exchanging code for user info...');
       
-      // For now, let's extract user info from client_info if available
+      // Extract user info from client_info if available
       if (clientInfo) {
         try {
           const decodedClientInfo = JSON.parse(atob(clientInfo));
           console.log('Decoded client info:', decodedClientInfo);
           
           // Extract user info from client_info
-          // You may need to adjust this based on your AD service's actual response format
+          // The client_info contains uid (user ID) and utid (tenant ID)
+          const uid = decodedClientInfo.uid;
+          const utid = decodedClientInfo.utid;
+          
+          // Create a user object with the available information
           const user: User = {
-            name: 'Authenticated User', // You'll need to get this from your AD service
-            email: 'user@summitbankng.com', // You'll need to get this from your AD service
+            name: `User ${uid?.substring(0, 8) || 'Authenticated'}`, // Use part of the UID as name
+            email: `${uid}@summitbankng.com`, // Construct email from UID
             accessToken: code, // Store the code as access token for now
-            expiresAt: Date.now() + (3600 * 1000) // 1 hour from now
+            expiresAt: Date.now() + (3600 * 1000), // 1 hour from now
+            uid: uid, // Store the full UID for reference
+            utid: utid // Store the tenant ID
           };
           
+          console.log('Created user from client_info:', user);
           return user;
         } catch (error) {
           console.error('Error decoding client_info:', error);
