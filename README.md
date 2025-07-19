@@ -13,7 +13,7 @@ A modern Angular-based staff intranet application for internal company communica
 
 ## Prerequisites
 
-- Node.js (v18 or higher)
+- Node.js (v20.19 or higher)
 - npm or yarn
 - Angular CLI
 
