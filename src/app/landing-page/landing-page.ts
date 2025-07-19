@@ -10,6 +10,8 @@ import { AuthService } from '../services/auth.service';
   styleUrl: './landing-page.scss'
 })
 export class LandingPageComponent implements OnInit {
+  loading = false;
+
   constructor(
     private router: Router,
     private authService: AuthService
@@ -23,7 +25,8 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
-  goToLogin() {
-    this.router.navigate(['/login']);
+  loginWithAD() {
+    this.loading = true;
+    this.authService.loginWithAD();
   }
 }

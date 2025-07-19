@@ -16,10 +16,8 @@ export class LoginPageComponent {
     private router: Router,
     private authService: AuthService
   ) {
-    // Redirect if already authenticated
-    if (this.authService.isAuthenticated()) {
-      this.router.navigate(['/dashboard']);
-    }
+    // Redirect to landing page since we don't need a separate login page
+    this.router.navigate(['/']);
   }
 
   onLogin(event: Event) {
