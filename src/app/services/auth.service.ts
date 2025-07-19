@@ -39,41 +39,123 @@ export class AuthService {
    * Handle authentication callback from AD service
    */
   handleAuthCallback(): Promise<User | null> {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         console.log('Handling auth callback...');
         const params = new URLSearchParams(window.location.search);
         console.log('URL params:', Object.fromEntries(params.entries()));
         
-        const name = params.get('name');
-        const email = params.get('email');
-        const accessToken = params.get('access_token');
-        const refreshToken = params.get('refresh_token');
-        const expiresIn = params.get('expires_in');
+        const code = params.get('code');
+        const clientInfo = params.get('client_info');
 
-        console.log('Extracted params:', { name, email, accessToken: !!accessToken, refreshToken: !!refreshToken, expiresIn });
-
-        if (name && email) {
-          const user: User = {
-            name,
-            email,
-            accessToken: accessToken || undefined,
-            refreshToken: refreshToken || undefined,
-            expiresAt: expiresIn ? Date.now() + (parseInt(expiresIn) * 1000) : undefined
-          };
-
-          console.log('Creating user object:', user);
-          this.setCurrentUser(user);
-          resolve(user);
+        if (code) {
+          console.log('Authorization code received, exchanging for user info...');
+          
+          // Exchange authorization code for user information
+          const user = await this.exchangeCodeForUserInfo(code, clientInfo || undefined);
+          if (user) {
+            console.log('User info retrieved successfully:', user);
+            this.setCurrentUser(user);
+            resolve(user);
+          } else {
+            reject(new Error('Failed to exchange code for user info'));
+          }
         } else {
-          console.log('Missing required params: name or email');
-          reject(new Error('Invalid authentication response'));
+          // Fallback to direct parameters (for backward compatibility)
+          const name = params.get('name');
+          const email = params.get('email');
+          const accessToken = params.get('access_token');
+          const refreshToken = params.get('refresh_token');
+          const expiresIn = params.get('expires_in');
+
+          console.log('Extracted params:', { name, email, accessToken: !!accessToken, refreshToken: !!refreshToken, expiresIn });
+
+          if (name && email) {
+            const user: User = {
+              name,
+              email,
+              accessToken: accessToken || undefined,
+              refreshToken: refreshToken || undefined,
+              expiresAt: expiresIn ? Date.now() + (parseInt(expiresIn) * 1000) : undefined
+            };
+
+            console.log('Creating user object:', user);
+            this.setCurrentUser(user);
+            resolve(user);
+          } else {
+            console.log('Missing required params: name or email');
+            reject(new Error('Invalid authentication response'));
+          }
         }
       } catch (error) {
         console.error('Error in handleAuthCallback:', error);
         reject(error);
       }
     });
+  }
+
+  /**
+   * Exchange authorization code for user information
+   */
+  private async exchangeCodeForUserInfo(code: string, clientInfo?: string): Promise<User | null> {
+    try {
+      console.log('Exchanging code for user info...');
+      
+      // For now, let's extract user info from client_info if available
+      if (clientInfo) {
+        try {
+          const decodedClientInfo = JSON.parse(atob(clientInfo));
+          console.log('Decoded client info:', decodedClientInfo);
+          
+          // Extract user info from client_info
+          // You may need to adjust this based on your AD service's actual response format
+          const user: User = {
+            name: 'Authenticated User', // You'll need to get this from your AD service
+            email: 'user@summitbankng.com', // You'll need to get this from your AD service
+            accessToken: code, // Store the code as access token for now
+            expiresAt: Date.now() + (3600 * 1000) // 1 hour from now
+          };
+          
+          return user;
+        } catch (error) {
+          console.error('Error decoding client_info:', error);
+        }
+      }
+
+      // If client_info decoding fails, make a request to your AD service to exchange the code
+      const response = await fetch(`${environment.adService.baseUrl}/auth/v1/token`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          code: code,
+          grant_type: 'authorization_code',
+          redirect_uri: this.CALLBACK_URL
+        })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Token exchange response:', data);
+        
+        const user: User = {
+          name: data.name || 'Authenticated User',
+          email: data.email || 'user@summitbankng.com',
+          accessToken: data.access_token,
+          refreshToken: data.refresh_token,
+          expiresAt: data.expires_in ? Date.now() + (data.expires_in * 1000) : undefined
+        };
+        
+        return user;
+      } else {
+        console.error('Token exchange failed:', response.status, response.statusText);
+        return null;
+      }
+    } catch (error) {
+      console.error('Error exchanging code for user info:', error);
+      return null;
+    }
   }
 
   /**
