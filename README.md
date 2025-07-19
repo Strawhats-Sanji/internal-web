@@ -84,6 +84,8 @@ npm run build
 ng deploy --base-href=/internal-web/
 ```
 
+**Note**: For Angular 20, the build output is located at `dist/staff-intranet/browser/browser/`
+
 ## Project Structure
 
 ```
