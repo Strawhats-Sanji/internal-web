@@ -1,59 +1,125 @@
-# StaffIntranet
+# Staff Intranet
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.1.
+A modern Angular-based staff intranet application for internal company communications and resources.
 
-## Development server
+## Features
+
+- Modern Angular 20 application
+- Tailwind CSS for styling
+- Authentication system
+- Dashboard interface
+- Landing page
+- Login functionality
+
+## Prerequisites
+
+- Node.js (v18 or higher)
+- npm or yarn
+- Angular CLI
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/Strawhats-Sanji/internal-web.git
+cd internal-web
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+## Development
+
+### Development server
 
 To start a local development server, run:
 
 ```bash
+npm start
+# or
 ng serve
 ```
 
 Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
 
-## Code scaffolding
+### Building
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+To build the project for production:
 
 ```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
+npm run build
+# or
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+This will compile your project and store the build artifacts in the `dist/` directory. The production build optimizes your application for performance and speed.
 
-## Running unit tests
+### Testing
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+To execute unit tests:
 
 ```bash
+npm test
+# or
 ng test
 ```
 
-## Running end-to-end tests
+## Deployment
 
-For end-to-end (e2e) testing, run:
+This project is configured for deployment to GitHub Pages. The deployment is handled automatically through GitHub Actions.
 
+### Manual Deployment
+
+To manually deploy to GitHub Pages:
+
+1. Build the project:
 ```bash
-ng e2e
+npm run build
 ```
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+2. Deploy to GitHub Pages:
+```bash
+ng deploy --base-href=/internal-web/
+```
 
-## Additional Resources
+## Project Structure
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+```
+src/
+├── app/
+│   ├── auth-callback/     # Authentication callback handling
+│   ├── dashboard-page/    # Main dashboard interface
+│   ├── landing-page/      # Landing page component
+│   ├── login-page/        # Login functionality
+│   ├── app.config.ts      # Application configuration
+│   ├── app.routes.ts      # Routing configuration
+│   └── app.ts            # Main application component
+├── index.html            # Main HTML file
+└── main.ts              # Application entry point
+```
+
+## Technologies Used
+
+- **Angular 20** - Frontend framework
+- **TypeScript** - Programming language
+- **Tailwind CSS** - Utility-first CSS framework
+- **RxJS** - Reactive programming library
+- **Angular Router** - Client-side routing
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is private and proprietary to the organization.
+
+## Support
+
+For support and questions, please contact the development team.
