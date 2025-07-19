@@ -169,51 +169,58 @@ export class AuthService {
         }
       }
 
-      // If client_info decoding fails, make a request to your AD service to exchange the code
-      console.log('=== ATTEMPTING TOKEN EXCHANGE ===');
-      console.log('Token exchange URL:', `${environment.adService.baseUrl}/auth/v1/token`);
-      console.log('Token exchange payload:', {
+      // Make a request to your AD service to exchange the code for user info
+      console.log('=== ATTEMPTING USER INFO EXCHANGE ===');
+      console.log('User info exchange URL:', `${environment.adService.baseUrl}${environment.adService.userInfoEndpoint}`);
+      console.log('Exchange payload:', {
         code: code.substring(0, 20) + '...',
-        grant_type: 'authorization_code',
         redirect_uri: this.CALLBACK_URL
       });
       
-      const response = await fetch(`${environment.adService.baseUrl}/auth/v1/token`, {
+      const response = await fetch(`${environment.adService.baseUrl}${environment.adService.userInfoEndpoint}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
           code: code,
-          grant_type: 'authorization_code',
           redirect_uri: this.CALLBACK_URL
         })
       });
 
-      console.log('=== TOKEN EXCHANGE RESPONSE ===');
+      console.log('=== USER INFO EXCHANGE RESPONSE ===');
       console.log('Response status:', response.status);
       console.log('Response status text:', response.statusText);
       console.log('Response headers:', Object.fromEntries(response.headers.entries()));
 
       if (response.ok) {
         const data = await response.json();
-        console.log('=== TOKEN EXCHANGE SUCCESS ===');
-        console.log('Full token response:', data);
-        console.log('Token response keys:', Object.keys(data));
+        console.log('=== USER INFO EXCHANGE SUCCESS ===');
+        console.log('Full user info response:', data);
+        console.log('Response keys:', Object.keys(data));
         
-        const user: User = {
-          name: data.name || 'Authenticated User',
-          email: data.email || 'user@summitbankng.com',
-          accessToken: data.access_token,
-          refreshToken: data.refresh_token,
-          expiresAt: data.expires_in ? Date.now() + (data.expires_in * 1000) : undefined
-        };
-        
-        console.log('=== USER FROM TOKEN EXCHANGE ===');
-        console.log('Created user from token exchange:', user);
-        return user;
+        // Check if the response matches the expected format
+        if (data.responseCode === '00' && data.responseMessage === 'Successful') {
+          const user: User = {
+            name: data.name || 'Authenticated User',
+            email: data.email || 'user@summitbankng.com',
+            accessToken: code, // Store the authorization code as access token
+            expiresAt: Date.now() + (3600 * 1000), // 1 hour from now
+            uid: clientInfo ? JSON.parse(atob(clientInfo)).uid : undefined,
+            utid: clientInfo ? JSON.parse(atob(clientInfo)).utid : undefined
+          };
+          
+          console.log('=== USER CREATED FROM AD SERVICE ===');
+          console.log('Created user from AD service response:', user);
+          return user;
+        } else {
+          console.error('=== AD SERVICE RESPONSE ERROR ===');
+          console.error('Response code:', data.responseCode);
+          console.error('Response message:', data.responseMessage);
+          return null;
+        }
       } else {
-        console.error('=== TOKEN EXCHANGE FAILED ===');
+        console.error('=== USER INFO EXCHANGE FAILED ===');
         console.error('Status:', response.status);
         console.error('Status text:', response.statusText);
         try {
