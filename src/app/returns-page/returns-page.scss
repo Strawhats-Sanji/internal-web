@@ -10,6 +10,12 @@
   left: 0;
   right: 0;
   bottom: 0;
+  
+  @media (max-width: 1024px) {
+    position: relative;
+    height: auto;
+    overflow: visible;
+  }
 }
 
 .returns-header {
@@ -32,6 +38,8 @@
   
   @media (max-width: 1024px) {
     flex-direction: column;
+    overflow: visible;
+    height: auto;
   }
 }
 

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { AuthService, User } from '../services/auth.service';
 import { NavbarComponent } from '../shared/navbar/navbar';
 
@@ -28,13 +29,24 @@ interface HistoryEntry {
 
 @Component({
   selector: 'app-returns-page',
-  imports: [CommonModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent],
   templateUrl: './returns-page.html',
   styleUrl: './returns-page.scss'
 })
 export class ReturnsPageComponent implements OnInit {
   currentUser: User | null = null;
   drawerOpen = false;
+  
+  // Return form data
+  returnData = {
+    returnName: '',
+    returnDetails: '',
+    frequency: '',
+    recipient: '',
+    dueDate: '',
+    internalTimeline: '',
+    evidence: null as File | null
+  };
 
   // Dashboard Overview Cards
   dashboardCards: DashboardCard[] = [
@@ -201,6 +213,54 @@ export class ReturnsPageComponent implements OnInit {
       case 'View': return 'bg-green-500 hover:bg-green-600';
       case 'Escalate': return 'bg-red-500 hover:bg-red-600';
       default: return 'bg-gray-500 hover:bg-gray-600';
+    }
+  }
+
+  // Form submission method
+  submitReturn() {
+    if (this.returnData.returnName && this.returnData.returnDetails && 
+        this.returnData.frequency && this.returnData.recipient && 
+        this.returnData.dueDate && this.returnData.internalTimeline) {
+      
+      console.log('Submitting return data:', this.returnData);
+      
+      // TODO: Integrate with backend API
+      // Example API call:
+      // this.returnsService.submitReturn(this.returnData).subscribe({
+      //   next: (response) => {
+      //     console.log('Return submitted successfully:', response);
+      //     // Reset form or show success message
+      //   },
+      //   error: (error) => {
+      //     console.error('Error submitting return:', error);
+      //     // Show error message
+      //   }
+      // });
+      
+      // For now, just show success message
+      alert('Return submitted successfully! Backend integration pending.');
+      
+      // Reset form
+      this.returnData = {
+        returnName: '',
+        returnDetails: '',
+        frequency: '',
+        recipient: '',
+        dueDate: '',
+        internalTimeline: '',
+        evidence: null
+      };
+    } else {
+      alert('Please fill in all required fields.');
+    }
+  }
+
+  // File upload handler
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      this.returnData.evidence = file;
+      console.log('File selected:', file.name);
     }
   }
 }

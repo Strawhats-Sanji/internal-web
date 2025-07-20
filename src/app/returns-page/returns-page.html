@@ -116,61 +116,87 @@
       <div class="quick-complete-sidebar w-96 bg-white shadow-lg border-l border-gray-200 p-6">
       <h2 class="text-xl font-semibold text-gray-800 mb-6">Quick Complete</h2>
       
-      <form class="space-y-6">
+      <form class="space-y-6" (ngSubmit)="submitReturn()" #returnForm="ngForm">
         <!-- Name of return -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Name of return</label>
-          <input type="text" value="AML Compliance Report" disabled 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+          <input type="text" name="returnName" [(ngModel)]="returnData.returnName" required
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors"
+                 placeholder="Enter return name">
         </div>
 
         <!-- Details of returns -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Details of returns</label>
-          <textarea disabled rows="4" 
-                    class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500 resize-none">
-Monthly submission of anti-money laundering compliance activities including customer due diligence, suspicious transaction monitoring, and regulatory reporting requirements.
+          <textarea name="returnDetails" [(ngModel)]="returnData.returnDetails" required rows="4" 
+                    class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors resize-none"
+                    placeholder="Enter return details">
           </textarea>
         </div>
 
         <!-- Frequency of returns -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Frequency of returns</label>
-          <input type="text" value="Monthly" disabled 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+          <select name="frequency" [(ngModel)]="returnData.frequency" required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors">
+            <option value="">Select frequency</option>
+            <option value="Daily">Daily</option>
+            <option value="Weekly">Weekly</option>
+            <option value="Monthly">Monthly</option>
+            <option value="Quarterly">Quarterly</option>
+            <option value="Annually">Annually</option>
+          </select>
         </div>
 
         <!-- Recipient of returns -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Recipient of returns [CBN/NDIC/NFIU/SEC etc]</label>
-          <input type="text" value="Central Bank of Nigeria (CBN)" disabled 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+          <select name="recipient" [(ngModel)]="returnData.recipient" required
+                  class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors">
+            <option value="">Select recipient</option>
+            <option value="Central Bank of Nigeria (CBN)">Central Bank of Nigeria (CBN)</option>
+            <option value="Nigeria Deposit Insurance Corporation (NDIC)">Nigeria Deposit Insurance Corporation (NDIC)</option>
+            <option value="Nigeria Financial Intelligence Unit (NFIU)">Nigeria Financial Intelligence Unit (NFIU)</option>
+            <option value="Securities and Exchange Commission (SEC)">Securities and Exchange Commission (SEC)</option>
+            <option value="Other">Other</option>
+          </select>
         </div>
 
         <!-- Due Date of Return -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Due Date of Return</label>
-          <input type="text" value="April 5, 2025" disabled 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+          <input type="date" name="dueDate" [(ngModel)]="returnData.dueDate" required
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors">
         </div>
 
         <!-- Internal Timeline -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Internal Timeline</label>
-          <input type="text" value="April 3, 2025" disabled 
-                 class="w-full px-3 py-2 border border-gray-300 rounded-lg bg-gray-100 text-gray-500">
+          <input type="date" name="internalTimeline" [(ngModel)]="returnData.internalTimeline" required
+                 class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#af1f23] focus:border-[#af1f23] transition-colors">
         </div>
 
         <!-- Upload Evidence -->
         <div>
           <label class="block text-sm font-medium text-gray-700 mb-2">Upload Evidence</label>
-          <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
-            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-              <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <div class="mt-4">
-              <p class="text-sm text-gray-600">Accepted file types: PDF, DOCX, XLSX, JPEG, CSV, PPTX</p>
-            </div>
+          <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center hover:border-[#af1f23] transition-colors">
+            <input type="file" 
+                   (change)="onFileSelected($event)" 
+                   accept=".pdf,.docx,.xlsx,.jpeg,.jpg,.csv,.pptx"
+                   class="hidden" 
+                   id="fileInput">
+            <label for="fileInput" class="cursor-pointer">
+              <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+                <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+              <div class="mt-4">
+                <p class="text-sm text-gray-600">Click to upload or drag and drop</p>
+                <p class="text-xs text-gray-500 mt-1">Accepted file types: PDF, DOCX, XLSX, JPEG, CSV, PPTX</p>
+                <p class="text-xs text-[#af1f23] mt-2" *ngIf="returnData.evidence">
+                  Selected: {{ returnData.evidence.name }}
+                </p>
+              </div>
+            </label>
           </div>
         </div>
 
