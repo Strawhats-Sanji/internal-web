@@ -138,6 +138,45 @@
           </div>
         </div>
       </div>
+      
+      <!-- Mobile Info Cards (shown only on mobile) -->
+      <div class="mobile-info-cards md:hidden mt-6">
+        <!-- Pending Tasks Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200 mb-4">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Pending Tasks – Complete Your Assigned Actions!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            Attention Team! Several high-priority tasks require immediate attention. Completing them on time ensures smooth operations and compliance adherence.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>View Tasks Now</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+
+        <!-- Departmental Targets Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200 mb-4">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Departmental Targets – Stay on Track for Q2 Goals!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            Our department's Q2 performance targets are set! Let's work together to achieve our milestones and exceed expectations.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>View Now</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+
+        <!-- SOP Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200 mb-4">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Standard Operating Procedures (SOP) – Stay Compliant & Efficient!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            New SOP updates are now available! To improve compliance and streamline processes, we've updated the Standard Operating Procedures for key workflows.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>Read Now</span>
+            <span>&rarr;</span>
+          </button>
+        </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
@@ -265,8 +304,8 @@
         </aside>
       </div>
 
-      <!-- Info Cards Grid -->
-      <div class="responsive-grid mt-6 md:mt-0">
+      <!-- Info Cards Grid (Desktop only) -->
+      <div class="responsive-grid mt-6 md:mt-0 hidden md:block">
         <!-- Pending Tasks Card -->
         <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200">
           <div class="font-bold text-lg mb-3 text-[#45505B]">Pending Tasks – Complete Your Assigned Actions!</div>

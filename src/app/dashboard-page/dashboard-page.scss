@@ -278,6 +278,22 @@
   }
 }
 
+.mobile-info-cards {
+  margin-top: 1.5rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
+  
+  .dashboard-card {
+    margin-bottom: 1.5rem;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
 // User Profile Section
 .user-profile {
   @media (max-width: 768px) {
