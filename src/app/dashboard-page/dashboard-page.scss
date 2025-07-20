@@ -153,17 +153,17 @@
 
 .image-slider-container {
   position: relative;
-  min-height: 224px;
+  height: 200px;
   flex: 1;
   border-radius: 12px;
   overflow: hidden;
   
   @media (min-width: 768px) {
-    min-height: 256px;
+    height: 240px;
   }
   
   @media (min-width: 1024px) {
-    min-height: 320px;
+    height: 280px;
   }
 }
 
