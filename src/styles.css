@@ -8,7 +8,7 @@ html, body {
   padding: 0;
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  overflow-x: hidden;
 }
 
 * {
@@ -17,12 +17,8 @@ html, body {
 
 /* Ensure dashboard fills entire viewport */
 .dashboard-container {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  right: 0 !important;
-  bottom: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 100vh !important;
   overflow: hidden !important;
 } 
