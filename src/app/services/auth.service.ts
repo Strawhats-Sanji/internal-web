@@ -37,13 +37,42 @@ export class AuthService {
       console.log('Callback URL:', this.CALLBACK_URL);
       
       // Since the AD service returns JSON instead of redirecting, we need to handle this differently
-      // The simplest approach is to redirect to the AD service and let it handle the flow
-      console.log('=== REDIRECTING TO AD SERVICE ===');
+      // We'll make a request to get the auth URL and then redirect to Microsoft
+      console.log('=== REQUESTING AUTH URL FROM AD SERVICE ===');
       
-      // Construct the redirect URL - the AD service should handle the Microsoft redirect
-      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1&auto_redirect=true`;
+      // Try to make a request to get the auth URL
+      try {
+        const response = await fetch(this.AD_ENDPOINT, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            redirect_uri: this.CALLBACK_URL
+          })
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log('=== AD SERVICE RESPONSE ===');
+          console.log('Response:', data);
+          
+          if (data.responseCode === '00' && data.responseMessage === 'Authentication URL generated successfully' && data.authUrl) {
+            console.log('=== REDIRECTING TO MICROSOFT AUTH ===');
+            console.log('Auth URL:', data.authUrl);
+            window.location.href = data.authUrl;
+            return;
+          }
+        }
+      } catch (fetchError) {
+        console.log('=== FETCH FAILED - USING FALLBACK ===');
+        console.log('Fetch error:', fetchError);
+      }
       
-      console.log('Redirect URL:', redirectUrl);
+      // Fallback: redirect to AD service directly
+      console.log('=== USING FALLBACK REDIRECT ===');
+      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1`;
+      console.log('Fallback redirect URL:', redirectUrl);
       window.location.href = redirectUrl;
       
     } catch (error) {
