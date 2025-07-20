@@ -18,7 +18,7 @@ html, body {
 /* Ensure dashboard fills entire viewport */
 .dashboard-container {
   position: relative !important;
-  width: 100% !important;
+  width: 100vw !important;
   min-height: 100vh !important;
   overflow: hidden !important;
 } 
