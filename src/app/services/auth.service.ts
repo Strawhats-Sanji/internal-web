@@ -69,11 +69,15 @@ export class AuthService {
         console.log('Fetch error:', fetchError);
       }
       
-      // Fallback: redirect to AD service directly
-      console.log('=== USING FALLBACK REDIRECT ===');
-      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1`;
-      console.log('Fallback redirect URL:', redirectUrl);
-      window.location.href = redirectUrl;
+      // Since CORS is blocking the fetch request, we'll use a different approach
+      // We'll construct the Microsoft auth URL directly based on the pattern we know
+      console.log('=== CONSTRUCTING MICROSOFT AUTH URL DIRECTLY ===');
+      
+      // Extract the auth URL from the known pattern
+      const microsoftAuthUrl = `https://login.microsoftonline.com/66fb2385-a9ad-46a0-b5e3-26e94ba72fd6/oauth2/v2.0/authorize?client_id=770485ce-c22b-474d-8864-6892c9ac2e48&scope=openid%20profile%20email%20offline_access&redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_mode=query&client_info=1&response_type=code`;
+      
+      console.log('Microsoft Auth URL:', microsoftAuthUrl);
+      window.location.href = microsoftAuthUrl;
       
     } catch (error) {
       console.error('=== ERROR IN LOGIN WITH AD ===');
