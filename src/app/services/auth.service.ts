@@ -36,14 +36,14 @@ export class AuthService {
       console.log('AD endpoint:', this.AD_ENDPOINT);
       console.log('Callback URL:', this.CALLBACK_URL);
       
-      // Since CORS is blocking direct API calls, use a redirect-based approach
-      // Construct the redirect URL with parameters
-      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1`;
-      
+      // Since the AD service returns JSON instead of redirecting, we need to handle this differently
+      // The simplest approach is to redirect to the AD service and let it handle the flow
       console.log('=== REDIRECTING TO AD SERVICE ===');
-      console.log('Redirect URL:', redirectUrl);
       
-      // Redirect to the AD service directly
+      // Construct the redirect URL - the AD service should handle the Microsoft redirect
+      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1&auto_redirect=true`;
+      
+      console.log('Redirect URL:', redirectUrl);
       window.location.href = redirectUrl;
       
     } catch (error) {
