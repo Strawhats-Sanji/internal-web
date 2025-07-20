@@ -74,7 +74,16 @@ export class NavbarComponent implements OnInit {
     this.closeTimeout = setTimeout(() => {
       this.navbarInternalServicesOpen = false;
       this.navbarIdrsSubmenuOpen = false;
-    }, 150); // 150ms delay before closing
+    }, 200); // Increased to 200ms for better user experience
+  }
+
+  // Prevent closing when clicking on menu items
+  onMenuItemClick() {
+    // Keep dropdown open briefly to allow navigation
+    setTimeout(() => {
+      this.navbarInternalServicesOpen = false;
+      this.navbarIdrsSubmenuOpen = false;
+    }, 100);
   }
 
   onIdrsSubmenuMouseEnter() {

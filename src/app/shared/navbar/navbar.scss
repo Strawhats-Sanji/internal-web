@@ -59,10 +59,10 @@
     &::before {
       content: '';
       position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
       z-index: -1;
     }
   }
@@ -71,6 +71,15 @@
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
+  }
+}
+
+// Improve menu item hover states
+.absolute a {
+  transition: all 0.2s ease;
+  
+  &:hover {
+    transform: translateX(2px);
   }
 }
 

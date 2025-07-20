@@ -44,15 +44,25 @@
           
           <!-- IDRS Submenu -->
           <div *ngIf="navbarIdrsSubmenuOpen" class="bg-gray-50">
-            <a routerLink="/idrs/search" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Search</a>
-            <a routerLink="/idrs/report" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Report</a>
-            <a routerLink="/idrs/view" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">View</a>
+            <a routerLink="/idrs/search" 
+               (click)="onMenuItemClick()"
+               class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Search</a>
+            <a routerLink="/idrs/report" 
+               (click)="onMenuItemClick()"
+               class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Report</a>
+            <a routerLink="/idrs/view" 
+               (click)="onMenuItemClick()"
+               class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">View</a>
           </div>
         </div>
         
         <!-- Other Services -->
-        <a routerLink="/verification" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Verification</a>
-        <a routerLink="/returns" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Returns</a>
+        <a routerLink="/verification" 
+           (click)="onMenuItemClick()"
+           class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Verification</a>
+        <a routerLink="/returns" 
+           (click)="onMenuItemClick()"
+           class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Returns</a>
       </div>
     </div>
     
