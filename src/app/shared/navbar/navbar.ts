@@ -74,7 +74,7 @@ export class NavbarComponent implements OnInit {
     this.closeTimeout = setTimeout(() => {
       this.navbarInternalServicesOpen = false;
       this.navbarIdrsSubmenuOpen = false;
-    }, 200); // Increased to 200ms for better user experience
+    }, 300); // Increased to 300ms to give more time for navigation
   }
 
   // Prevent closing when clicking on menu items
@@ -86,18 +86,9 @@ export class NavbarComponent implements OnInit {
     }, 100);
   }
 
-  onIdrsSubmenuMouseEnter() {
-    if (this.closeTimeout) {
-      clearTimeout(this.closeTimeout);
-      this.closeTimeout = null;
-    }
-    this.navbarIdrsSubmenuOpen = true;
-  }
-
-  onIdrsSubmenuMouseLeave() {
-    this.closeTimeout = setTimeout(() => {
-      this.navbarIdrsSubmenuOpen = false;
-    }, 150); // 150ms delay before closing
+  // IDRS submenu should be click-based, not hover-based
+  toggleIdrsSubmenu() {
+    this.navbarIdrsSubmenuOpen = !this.navbarIdrsSubmenuOpen;
   }
 
   // Drawer handlers (separate from navbar)

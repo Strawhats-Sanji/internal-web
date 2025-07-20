@@ -32,15 +32,15 @@
         class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
         
         <!-- IDRS Service with Submenu -->
-        <div class="relative" 
-             (mouseenter)="onIdrsSubmenuMouseEnter()" 
-             (mouseleave)="onIdrsSubmenuMouseLeave()">
-          <div class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center justify-between">
+        <div class="relative">
+          <button 
+            (click)="toggleIdrsSubmenu()"
+            class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center justify-between">
             <span class="text-gray-700">IDRS Service</span>
             <svg class="w-4 h-4 transition-transform" [class.rotate-90]="navbarIdrsSubmenuOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 5l7 7-7 7" />
             </svg>
-          </div>
+          </button>
           
           <!-- IDRS Submenu -->
           <div *ngIf="navbarIdrsSubmenuOpen" class="bg-gray-50">
