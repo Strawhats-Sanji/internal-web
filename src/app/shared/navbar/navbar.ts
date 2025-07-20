@@ -45,22 +45,50 @@ export class NavbarComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
   }
 
-  // Navbar mouseover handlers
+  // Navbar mouseover handlers with delay
+  private closeTimeout: any;
+
   onInternalServicesMouseEnter() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
     this.navbarInternalServicesOpen = true;
   }
 
   onInternalServicesMouseLeave() {
-    this.navbarInternalServicesOpen = false;
-    this.navbarIdrsSubmenuOpen = false;
+    this.closeTimeout = setTimeout(() => {
+      this.navbarInternalServicesOpen = false;
+      this.navbarIdrsSubmenuOpen = false;
+    }, 150); // 150ms delay before closing
+  }
+
+  onDropdownMouseEnter() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+  }
+
+  onDropdownMouseLeave() {
+    this.closeTimeout = setTimeout(() => {
+      this.navbarInternalServicesOpen = false;
+      this.navbarIdrsSubmenuOpen = false;
+    }, 150); // 150ms delay before closing
   }
 
   onIdrsSubmenuMouseEnter() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
     this.navbarIdrsSubmenuOpen = true;
   }
 
   onIdrsSubmenuMouseLeave() {
-    this.navbarIdrsSubmenuOpen = false;
+    this.closeTimeout = setTimeout(() => {
+      this.navbarIdrsSubmenuOpen = false;
+    }, 150); // 150ms delay before closing
   }
 
   // Drawer handlers (separate from navbar)
