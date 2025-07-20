@@ -27,48 +27,53 @@
     <main class="dashboard-content p-4 md:p-6 lg:p-8">
       <!-- Top Section: Holiday Card and Updates -->
       <div class="flex flex-col lg:flex-row gap-6 mb-8">
-        <!-- Holiday Slider -->
+        <!-- Image Slider -->
         <div class="flex-1 flex flex-col">
-          <div class="holiday-slider-container bg-[#545a60] text-white rounded-xl w-full shadow-lg overflow-hidden">
+          <div class="image-slider-container bg-white rounded-xl w-full shadow-lg overflow-hidden">
             <!-- Slider Content -->
-            <div class="holiday-slider-track flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
-              <!-- Slide 1 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-56 md:h-64 flex flex-col items-center justify-center p-6">
-                <div class="text-center">
-                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">🎄 Christmas Day</div>
-                  <div class="text-lg md:text-xl lg:text-2xl mb-2">December 25, 2024</div>
-                  <div class="text-base md:text-lg opacity-90">Bank Holiday - All branches closed</div>
-                  <div class="text-sm opacity-75 mt-2">Enjoy the festive season with family and friends!</div>
+            <div class="image-slider-track flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
+              <!-- Slide 1: Team Collaboration -->
+              <div class="image-slide flex-shrink-0 w-full h-56 md:h-64 relative">
+                <img 
+                  src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7399_yyxach.jpg" 
+                  alt="Team Collaboration at Summit Bank" 
+                  class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">🤝 Team Collaboration</div>
+                  <div class="text-lg md:text-xl lg:text-2xl mb-2">Building Success Together</div>
+                  <div class="text-base md:text-lg opacity-90">Our dedicated team working together to deliver exceptional service</div>
+                  <div class="text-sm opacity-75 mt-2">Excellence through collaboration and shared goals</div>
                 </div>
               </div>
               
-              <!-- Slide 2 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-56 md:h-64 flex flex-col items-center justify-center p-6">
-                <div class="text-center">
-                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">🎊 New Year's Day</div>
-                  <div class="text-lg md:text-xl lg:text-2xl mb-2">January 1, 2025</div>
-                  <div class="text-base md:text-lg opacity-90">Bank Holiday - All branches closed</div>
-                  <div class="text-sm opacity-75 mt-2">Welcome to a new year of opportunities!</div>
+              <!-- Slide 2: Professional Excellence -->
+              <div class="image-slide flex-shrink-0 w-full h-56 md:h-64 relative">
+                <img 
+                  src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7258_z6wiim.jpg" 
+                  alt="Professional Excellence at Summit Bank" 
+                  class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">⭐ Professional Excellence</div>
+                  <div class="text-lg md:text-xl lg:text-2xl mb-2">Setting Industry Standards</div>
+                  <div class="text-base md:text-lg opacity-90">Maintaining the highest standards of professionalism</div>
+                  <div class="text-sm opacity-75 mt-2">Committed to excellence in every interaction</div>
                 </div>
               </div>
               
-              <!-- Slide 3 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-56 md:h-64 flex flex-col items-center justify-center p-6">
-                <div class="text-center">
-                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">💝 Valentine's Day</div>
-                  <div class="text-lg md:text-xl lg:text-2xl mb-2">February 14, 2025</div>
-                  <div class="text-base md:text-lg opacity-90">Special customer appreciation day</div>
-                  <div class="text-sm opacity-75 mt-2">Show love to our valued customers!</div>
-                </div>
-              </div>
-              
-              <!-- Slide 4 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-56 md:h-64 flex flex-col items-center justify-center p-6">
-                <div class="text-center">
-                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-3">🌍 Independence Day</div>
-                  <div class="text-lg md:text-xl lg:text-2xl mb-2">March 6, 2025</div>
-                  <div class="text-base md:text-lg opacity-90">National Holiday - Limited services</div>
-                  <div class="text-sm opacity-75 mt-2">Celebrating Ghana's independence!</div>
+              <!-- Slide 3: Customer Focus -->
+              <div class="image-slide flex-shrink-0 w-full h-56 md:h-64 relative">
+                <img 
+                  src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7398_qjlull.jpg" 
+                  alt="Customer Focus at Summit Bank" 
+                  class="w-full h-full object-cover">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 right-0 p-6 text-white">
+                  <div class="text-2xl md:text-3xl lg:text-4xl font-bold mb-2">💼 Customer Focus</div>
+                  <div class="text-lg md:text-xl lg:text-2xl mb-2">Putting Customers First</div>
+                  <div class="text-base md:text-lg opacity-90">Dedicated to providing exceptional customer experiences</div>
+                  <div class="text-sm opacity-75 mt-2">Your success is our priority</div>
                 </div>
               </div>
             </div>
@@ -86,13 +91,13 @@
             </button>
             
             <div class="text-sm text-[#545a60] font-medium">
-              {{ currentSlide + 1 }} of 4
+              {{ currentSlide + 1 }} of 3
             </div>
             
             <button 
               (click)="nextSlide()" 
               class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors"
-              [disabled]="currentSlide === 3">
+              [disabled]="currentSlide === 2">
               <svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M9 5l7 7-7 7" />
               </svg>

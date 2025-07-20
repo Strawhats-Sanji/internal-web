@@ -13,7 +13,7 @@ export class DashboardPageComponent implements OnInit {
   drawerOpen = false;
   currentUser: User | null = null;
   currentSlide = 0;
-  totalSlides = 4;
+  totalSlides = 3;
   internalServicesOpen = false;
   idrsSubmenuOpen = false;
 
