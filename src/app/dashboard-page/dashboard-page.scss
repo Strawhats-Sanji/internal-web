@@ -17,10 +17,12 @@
 .dashboard-header {
   flex-shrink: 0;
   z-index: 40;
+  position: relative;
   
   @media (max-width: 768px) {
     position: sticky;
     top: 0;
+    background: #ede3cc;
   }
 }
 
@@ -112,6 +114,7 @@
     bottom: 0;
     background: rgba(0, 0, 0, 0.4);
     backdrop-filter: blur(4px);
+    animation: fadeIn 0.3s ease-out;
   }
   
   .drawer-content {
@@ -131,6 +134,11 @@
     
     &.open {
       transform: translateX(0);
+    }
+    
+    // Ensure drawer is always on top
+    @media (max-width: 768px) {
+      z-index: 10001;
     }
   }
 }
