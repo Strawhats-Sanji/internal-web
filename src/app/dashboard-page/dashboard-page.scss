@@ -2,9 +2,15 @@
 .dashboard-container {
   min-height: 100vh;
   height: 100vh;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 // Header Styles
@@ -80,18 +86,40 @@
 
 // Mobile Drawer
 .mobile-drawer {
-  @media (max-width: 768px) {
-    .drawer-overlay {
-      backdrop-filter: blur(4px);
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9999;
+  
+  .drawer-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(4px);
+  }
+  
+  .drawer-content {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 320px;
+    max-width: 85vw;
+    background: white;
+    box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    z-index: 10000;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
-    .drawer-content {
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-      
-      &.open {
-        transform: translateX(0);
-      }
+    &.open {
+      transform: translateX(0);
     }
   }
 }
