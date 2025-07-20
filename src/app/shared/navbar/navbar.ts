@@ -12,8 +12,14 @@ import { AuthService, User } from '../../services/auth.service';
 export class NavbarComponent implements OnInit {
   currentUser: User | null = null;
   drawerOpen = false;
-  internalServicesOpen = false;
-  idrsSubmenuOpen = false;
+  
+  // Navbar dropdown states (separate from drawer)
+  navbarInternalServicesOpen = false;
+  navbarIdrsSubmenuOpen = false;
+  
+  // Drawer accordion states (separate from navbar)
+  drawerInternalServicesOpen = false;
+  drawerIdrsSubmenuOpen = false;
 
   // Internal Services Data
   internalServices = [
@@ -39,6 +45,25 @@ export class NavbarComponent implements OnInit {
     this.currentUser = this.authService.getCurrentUser();
   }
 
+  // Navbar mouseover handlers
+  onInternalServicesMouseEnter() {
+    this.navbarInternalServicesOpen = true;
+  }
+
+  onInternalServicesMouseLeave() {
+    this.navbarInternalServicesOpen = false;
+    this.navbarIdrsSubmenuOpen = false;
+  }
+
+  onIdrsSubmenuMouseEnter() {
+    this.navbarIdrsSubmenuOpen = true;
+  }
+
+  onIdrsSubmenuMouseLeave() {
+    this.navbarIdrsSubmenuOpen = false;
+  }
+
+  // Drawer handlers (separate from navbar)
   openDrawer() {
     this.drawerOpen = true;
   }
@@ -51,12 +76,13 @@ export class NavbarComponent implements OnInit {
     this.authService.logout();
   }
 
-  toggleInternalServices() {
-    this.internalServicesOpen = !this.internalServicesOpen;
+  // Drawer accordion handlers (separate from navbar)
+  toggleDrawerInternalServices() {
+    this.drawerInternalServicesOpen = !this.drawerInternalServicesOpen;
   }
 
-  toggleIdrsSubmenu() {
-    this.idrsSubmenuOpen = !this.idrsSubmenuOpen;
+  toggleDrawerIdrsSubmenu() {
+    this.drawerIdrsSubmenuOpen = !this.drawerIdrsSubmenuOpen;
   }
 
   isActiveRoute(route: string): boolean {

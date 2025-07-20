@@ -47,6 +47,38 @@
   }
 }
 
+// Dropdown Menu Enhancements
+.group {
+  .absolute {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &:hover .absolute {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+}
+
+// Submenu Enhancements
+.relative {
+  .bg-gray-50 {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  &:hover .bg-gray-50 {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+  }
+}
+
 // Mobile Drawer
 .mobile-drawer {
   position: fixed;

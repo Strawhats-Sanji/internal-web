@@ -13,34 +13,35 @@
     </a>
     
     <!-- Internal Services Dropdown -->
-    <div class="relative group">
+    <div class="relative group" 
+         (mouseenter)="onInternalServicesMouseEnter()" 
+         (mouseleave)="onInternalServicesMouseLeave()">
       <button 
-        (click)="toggleInternalServices()"
         class="nav-link hover:text-[#af1f23] font-medium transition-colors flex items-center gap-1">
         Internal Services
-        <svg class="w-4 h-4 transition-transform" [class.rotate-180]="internalServicesOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <svg class="w-4 h-4 transition-transform" [class.rotate-180]="navbarInternalServicesOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
           <path d="M19 9l-7 7-7-7" />
         </svg>
       </button>
       
       <!-- Dropdown Menu -->
       <div 
-        *ngIf="internalServicesOpen"
+        *ngIf="navbarInternalServicesOpen"
         class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
         
         <!-- IDRS Service with Submenu -->
-        <div class="relative">
-          <button 
-            (click)="toggleIdrsSubmenu()"
-            class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center justify-between">
+        <div class="relative" 
+             (mouseenter)="onIdrsSubmenuMouseEnter()" 
+             (mouseleave)="onIdrsSubmenuMouseLeave()">
+          <div class="w-full px-4 py-2 text-left hover:bg-gray-50 flex items-center justify-between">
             <span class="text-gray-700">IDRS Service</span>
-            <svg class="w-4 h-4 transition-transform" [class.rotate-90]="idrsSubmenuOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <svg class="w-4 h-4 transition-transform" [class.rotate-90]="navbarIdrsSubmenuOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M9 5l7 7-7 7" />
             </svg>
-          </button>
+          </div>
           
           <!-- IDRS Submenu -->
-          <div *ngIf="idrsSubmenuOpen" class="bg-gray-50">
+          <div *ngIf="navbarIdrsSubmenuOpen" class="bg-gray-50">
             <a routerLink="/idrs/search" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Search</a>
             <a routerLink="/idrs/report" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">Report</a>
             <a routerLink="/idrs/view" class="block px-6 py-2 text-sm text-gray-600 hover:bg-gray-100 hover:text-[#af1f23]">View</a>
@@ -114,29 +115,29 @@
       <!-- Internal Services Accordion -->
       <div class="border-b border-gray-200">
         <button 
-          (click)="toggleInternalServices()"
+          (click)="toggleDrawerInternalServices()"
           class="w-full py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors flex items-center justify-between">
           <span>Internal Services</span>
-          <svg class="w-5 h-5 transition-transform" [class.rotate-180]="internalServicesOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <svg class="w-5 h-5 transition-transform" [class.rotate-180]="drawerInternalServicesOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
             <path d="M19 9l-7 7-7-7" />
           </svg>
         </button>
         
         <!-- Accordion Content -->
-        <div *ngIf="internalServicesOpen" class="pl-4 space-y-1">
+        <div *ngIf="drawerInternalServicesOpen" class="pl-4 space-y-1">
           <!-- IDRS Service -->
           <div class="border-l-2 border-[#af1f23] ml-2">
             <button 
-              (click)="toggleIdrsSubmenu()"
+              (click)="toggleDrawerIdrsSubmenu()"
               class="w-full py-2 px-4 text-left hover:bg-[#af1f23] hover:text-white transition-colors flex items-center justify-between">
               <span class="text-sm">IDRS Service</span>
-              <svg class="w-4 h-4 transition-transform" [class.rotate-90]="idrsSubmenuOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="w-4 h-4 transition-transform" [class.rotate-90]="drawerIdrsSubmenuOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M9 5l7 7-7 7" />
               </svg>
             </button>
             
             <!-- IDRS Submenu -->
-            <div *ngIf="idrsSubmenuOpen" class="pl-4 space-y-1">
+            <div *ngIf="drawerIdrsSubmenuOpen" class="pl-4 space-y-1">
               <a routerLink="/idrs/search" class="block py-2 px-4 text-sm hover:bg-[#af1f23] hover:text-white transition-colors">Search</a>
               <a routerLink="/idrs/report" class="block py-2 px-4 text-sm hover:bg-[#af1f23] hover:text-white transition-colors">Report</a>
               <a routerLink="/idrs/view" class="block py-2 px-4 text-sm hover:bg-[#af1f23] hover:text-white transition-colors">View</a>
