@@ -27,6 +27,27 @@
   }
 }
 
+.returns-sidebar {
+  width: 280px;
+  flex-shrink: 0;
+  
+  @media (max-width: 1024px) {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2cfa2;
+  }
+}
+
+.returns-content {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  
+  @media (max-width: 1024px) {
+    flex-direction: column;
+  }
+}
+
 // Mobile Drawer
 .mobile-drawer {
   position: fixed;
@@ -144,6 +165,17 @@ table {
   &:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  }
+}
+
+// User Profile
+.user-avatar {
+  width: 80px;
+  height: 80px;
+  
+  @media (min-width: 768px) {
+    width: 100px;
+    height: 100px;
   }
 }
 
