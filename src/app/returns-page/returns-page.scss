@@ -24,6 +24,7 @@
   display: flex;
   overflow: hidden;
   height: calc(100vh - 80px); // Subtract header height
+  width: 100%;
   
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -47,6 +48,7 @@
   flex: 1;
   display: flex;
   overflow: hidden;
+  width: 100%;
   
   @media (max-width: 1024px) {
     flex-direction: column;
@@ -58,6 +60,7 @@
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
+  min-width: 0; // Allow flex item to shrink below content size
 }
 
 // Mobile Drawer
@@ -194,6 +197,7 @@ table {
 // Quick Complete Sidebar
 .quick-complete-sidebar {
   width: 384px; // w-96
+  flex-shrink: 0;
   background: white;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   border-left: 1px solid #e5e7eb;
