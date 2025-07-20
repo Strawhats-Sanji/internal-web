@@ -2,7 +2,7 @@
   <!-- Shared Navbar -->
   <app-navbar></app-navbar>
 
-  <!-- Main Content Area -->
+    <!-- Main Content Area -->
   <div class="dashboard-main">
     <!-- Sidebar -->
     <aside class="dashboard-sidebar bg-[#ede3cc] border-r border-[#e2cfa2] p-4 md:p-6">
@@ -94,6 +94,50 @@
           </div>
         </div>
       </div>
+      
+      <!-- Mobile Latest Updates Section (shown only on mobile) -->
+      <div class="mobile-updates-section md:hidden mt-6">
+        <div class="bg-[#f8f6f1] rounded-xl p-6 shadow-lg">
+          <h3 class="text-xl font-semibold mb-4">Latest Updates</h3>
+          
+          <!-- Update Item 1 -->
+          <div class="mb-6">
+            <div class="flex gap-2 mb-3 flex-wrap">
+              <span class="bg-[#ffe6b3] text-[#af1f23] px-3 py-1 rounded-full text-xs font-semibold">HR Update</span>
+              <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">Promotions</span>
+            </div>
+            <div class="mb-3">
+              <div class="font-bold text-lg mb-2">Employee Promotions</div>
+              <div class="text-sm text-gray-700 leading-relaxed">
+                We are excited to announce the promotion of Jane Doe to Senior Compliance Officer in the Regulatory Affairs Department! 🎉 Jane has been instrumental in ensuring compliance excellence, and we look forward to her continued success in her new role. Congratulations, Jane! 👏
+              </div>
+            </div>
+            <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+              <span>View More</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+
+          <hr class="my-6 border-gray-300">
+
+          <!-- Update Item 2 -->
+          <div>
+            <div class="flex gap-2 mb-3 flex-wrap">
+              <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">News</span>
+            </div>
+            <div class="mb-3">
+              <div class="font-bold text-lg mb-2">Employee Recognition – Star Performer of the Month</div>
+              <div class="text-sm text-gray-700 leading-relaxed">
+                👏 Congratulations to David Osei (Risk Management) for being awarded Employee of the Month! His dedication to fraud detection and risk assessment has significantly contributed to the bank's security. Well done, David! 🎉
+              </div>
+            </div>
+            <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+              <span>Send Gift</span>
+              <span>&rarr;</span>
+            </button>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
@@ -172,14 +216,14 @@
                 [disabled]="currentSlide === 2">
                 <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                   <path d="M9 5l7 7-7 7" />
-                </svg>
+              </svg>
               </button>
             </div>
           </div>
         </div>
 
-        <!-- Updates Section -->
-        <aside class="updates-section w-full lg:w-80 bg-[#f8f6f1] rounded-xl p-6 shadow-lg mt-6 md:mt-0">
+        <!-- Updates Section (Desktop) -->
+        <aside class="updates-section w-full lg:w-80 bg-[#f8f6f1] rounded-xl p-6 shadow-lg hidden lg:block">
           <h3 class="text-xl font-semibold mb-4">Latest Updates</h3>
           
           <!-- Update Item 1 -->

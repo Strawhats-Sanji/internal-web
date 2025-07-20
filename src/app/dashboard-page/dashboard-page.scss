@@ -266,6 +266,14 @@
   }
 }
 
+.mobile-updates-section {
+  margin-top: 1.5rem;
+  
+  @media (max-width: 768px) {
+    margin-top: 2rem;
+  }
+}
+
 // User Profile Section
 .user-profile {
   @media (max-width: 768px) {
