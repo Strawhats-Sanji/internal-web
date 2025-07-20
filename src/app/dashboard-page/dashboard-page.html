@@ -1,113 +1,189 @@
-<div class="min-h-screen bg-[#ede3cc] font-sans text-[#45505B] flex flex-col">
+<div class="dashboard-container bg-[#ede3cc] font-sans text-[#45505B]">
   <!-- Header -->
-  <header class="flex flex-col md:flex-row items-center justify-between px-4 md:px-12 py-4 border-b border-[#e2cfa2] bg-[#ede3cc]">
+  <header class="dashboard-header flex flex-col md:flex-row items-center justify-between px-4 md:px-8 lg:px-12 py-4 border-b border-[#e2cfa2] bg-[#ede3cc] shadow-sm">
     <div class="flex items-center space-x-4 w-full md:w-auto justify-between">
-      <img src="https://res.cloudinary.com/netpoc-inc/image/upload/v1747611330/Logo_I_l56uvv.svg" alt="Summit Bank Logo" class="h-10 md:h-12 w-auto" />
-      <button class="md:hidden" (click)="openDrawer()">
-        <svg class="h-8 w-8" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+      <img src="https://res.cloudinary.com/netpoc-inc/image/upload/v1747611330/Logo_I_l56uvv.svg" alt="Summit Bank Logo" class="h-8 md:h-10 lg:h-12 w-auto" />
+      <button class="md:hidden p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors" (click)="openDrawer()" aria-label="Open menu">
+        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
     </div>
-    <nav class="hidden md:flex flex-1 justify-center space-x-6 md:space-x-12 mt-4 md:mt-0">
-      <a href="#" class="hover:text-secondary font-medium">Home</a>
-      <a href="#" class="hover:text-secondary font-medium">Internal Services</a>
-      <a href="#" class="hover:text-secondary font-medium">Whistleblower</a>
-      <a href="#" class="hover:text-secondary font-medium">IT Support</a>
+    
+    <nav class="hidden md:flex flex-1 justify-center space-x-6 md:space-x-8 lg:space-x-12 mt-4 md:mt-0">
+      <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">Home</a>
+      <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">Internal Services</a>
+      <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">Whistleblower</a>
+      <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">IT Support</a>
     </nav>
+    
     <div class="hidden md:flex items-center space-x-4">
-      <button><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" /></svg></button>
-      <button><svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg></button>
-      <div class="flex items-center space-x-2">
-        <span class="text-sm font-medium">{{ currentUser?.name || 'User' }}</span>
-        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="h-8 w-8 rounded-full border-2 border-primary" />
+      <button class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors" aria-label="Search">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+      </button>
+      <button class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors relative" aria-label="Notifications">
+        <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+        </svg>
+        <span class="absolute -top-1 -right-1 h-3 w-3 bg-[#af1f23] rounded-full"></span>
+      </button>
+      <div class="flex items-center space-x-3">
+        <span class="text-sm font-medium hidden lg:block">{{ currentUser?.name || 'User' }}</span>
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="h-8 w-8 rounded-full border-2 border-[#af1f23]" />
       </div>
-      <button (click)="openDrawer()"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" /></svg></button>
     </div>
   </header>
 
-  <!-- Drawer Overlay -->
-  <div *ngIf="drawerOpen" class="fixed inset-0 z-50">
-    <div class="absolute inset-0 bg-black bg-opacity-40" (click)="closeDrawer()"></div>
-    <aside class="fixed top-0 right-0 h-full w-72 max-w-full bg-white shadow-lg flex flex-col z-50">
+  <!-- Mobile Drawer -->
+  <div *ngIf="drawerOpen" class="mobile-drawer fixed inset-0 z-50">
+    <div class="drawer-overlay absolute inset-0 bg-black bg-opacity-40" (click)="closeDrawer()"></div>
+    <aside class="drawer-content fixed top-0 right-0 h-full w-80 max-w-[85vw] bg-white shadow-xl flex flex-col z-50">
       <div class="flex items-center justify-between p-6 border-b">
         <span class="text-lg font-bold">Menu</span>
-        <button (click)="closeDrawer()"><svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M6 18L18 6M6 6l12 12" /></svg></button>
+        <button (click)="closeDrawer()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+          <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
       </div>
-      <nav class="flex-1 flex flex-col gap-4 p-6">
-        <a href="#" class="py-2 px-4 rounded hover:bg-primary hover:text-white transition">Home</a>
-        <a href="#" class="py-2 px-4 rounded hover:bg-primary hover:text-white transition">Internal Services</a>
-        <a href="#" class="py-2 px-4 rounded hover:bg-primary hover:text-white transition">Whistleblower</a>
-        <a href="#" class="py-2 px-4 rounded hover:bg-primary hover:text-white transition">IT Support</a>
+      <nav class="flex-1 flex flex-col gap-2 p-6">
+        <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">Home</a>
+        <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">Internal Services</a>
+        <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">Whistleblower</a>
+        <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">IT Support</a>
       </nav>
       <div class="p-6 border-t">
-        <button (click)="logout()" class="w-full py-2 bg-secondary text-white rounded-lg font-semibold hover:bg-[#d13a3e] transition">Logout</button>
+        <button (click)="logout()" class="w-full py-3 bg-[#af1f23] text-white rounded-lg font-semibold hover:bg-[#d13a3e] transition-colors">
+          Logout
+        </button>
       </div>
     </aside>
   </div>
 
-  <div class="flex flex-1 flex-col md:flex-row overflow-x-hidden">
+  <!-- Main Content Area -->
+  <div class="dashboard-main">
     <!-- Sidebar -->
-    <aside class="w-full md:w-64 flex flex-row md:flex-col items-center pt-4 md:pt-8 border-b md:border-b-0 md:border-r border-[#e2cfa2] bg-[#ede3cc] justify-center md:justify-start">
-      <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="h-16 w-16 md:h-20 md:w-20 rounded-full border-4 border-primary mb-2 md:mb-4" />
-      <div class="text-base md:text-lg font-medium text-center md:text-left">
-        Good Morning,<br>
-        <span class="font-bold">{{ currentUser?.name || 'User' }}!</span>
-        <div class="text-sm text-gray-600 mt-1">{{ currentUser?.email }}</div>
-        <div class="text-xs text-gray-500 mt-1" *ngIf="currentUser?.uid">
-          ID: {{ currentUser?.uid?.substring(0, 8) }}...
+    <aside class="dashboard-sidebar bg-[#ede3cc] border-r border-[#e2cfa2] p-4 md:p-6">
+      <div class="user-profile flex flex-col items-center text-center">
+        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="user-avatar rounded-full border-4 border-[#af1f23] mb-4" />
+        <div class="user-info">
+          <div class="text-lg md:text-xl font-semibold mb-1">
+            Good Morning,<br>
+            <span class="font-bold text-[#af1f23]">{{ currentUser?.name || 'User' }}!</span>
+          </div>
+          <div class="text-sm text-gray-600 mb-2">{{ currentUser?.email }}</div>
+          <div class="text-xs text-gray-500" *ngIf="currentUser?.uid">
+            ID: {{ currentUser?.uid?.substring(0, 8) }}...
+          </div>
         </div>
       </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="flex-1 p-4 md:p-8 flex flex-col gap-6 overflow-x-auto">
-      <div class="flex flex-col lg:flex-row gap-6">
-        <!-- Center: Holiday Card -->
-        <div class="flex-1 flex flex-col items-center mb-4 lg:mb-0">
-          <div class="bg-[#545a60] text-white rounded-xl w-full max-w-lg h-40 md:h-48 flex items-center justify-center text-base md:text-xl font-semibold mb-4">Upcoming Holiday and Observance</div>
+    <main class="dashboard-content p-4 md:p-6 lg:p-8">
+      <!-- Top Section: Holiday Card and Updates -->
+      <div class="flex flex-col lg:flex-row gap-6 mb-8">
+        <!-- Holiday Card -->
+        <div class="flex-1 flex flex-col items-center">
+          <div class="holiday-card bg-[#545a60] text-white rounded-xl w-full max-w-lg flex items-center justify-center text-lg md:text-xl font-semibold mb-4 shadow-lg">
+            Upcoming Holiday and Observance
+          </div>
           <div class="flex justify-end w-full max-w-lg">
-            <button class="mr-2"><svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7" /></svg></button>
-            <button><svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7" /></svg></button>
+            <button class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors mr-2">
+              <svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors">
+              <svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
           </div>
         </div>
-        <!-- Right: Latest Updates -->
-        <aside class="w-full lg:w-96 bg-[#f8f6f1] rounded-xl p-4 md:p-6 shadow flex flex-col gap-4">
-          <h3 class="text-lg md:text-xl font-semibold mb-2">Latest Updates</h3>
-          <div class="flex gap-2 mb-2 flex-wrap">
-            <span class="bg-[#ffe6b3] text-[#af1f23] px-3 py-1 rounded-full text-xs font-semibold">HR Update</span>
-            <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">Promotions</span>
+
+        <!-- Updates Section -->
+        <aside class="updates-section w-full lg:w-96 bg-[#f8f6f1] rounded-xl p-6 shadow-lg">
+          <h3 class="text-xl font-semibold mb-4">Latest Updates</h3>
+          
+          <!-- Update Item 1 -->
+          <div class="mb-6">
+            <div class="flex gap-2 mb-3 flex-wrap">
+              <span class="bg-[#ffe6b3] text-[#af1f23] px-3 py-1 rounded-full text-xs font-semibold">HR Update</span>
+              <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">Promotions</span>
+            </div>
+            <div class="mb-3">
+              <div class="font-bold text-lg mb-2">Employee Promotions</div>
+              <div class="text-sm text-gray-700 leading-relaxed">
+                We are excited to announce the promotion of Jane Doe to Senior Compliance Officer in the Regulatory Affairs Department! 🎉 Jane has been instrumental in ensuring compliance excellence, and we look forward to her continued success in her new role. Congratulations, Jane! 👏
+              </div>
+            </div>
+            <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+              <span>View More</span>
+              <span>&rarr;</span>
+            </button>
           </div>
+
+          <hr class="my-6 border-gray-300">
+
+          <!-- Update Item 2 -->
           <div>
-            <div class="font-bold">Employee Promotions</div>
-            <div class="text-xs md:text-sm mb-2">We are excited to announce the promotion of Jane Doe to Senior Compliance Officer in the Regulatory Affairs Department! 🎉 Jane has been instrumental in ensuring compliance excellence, and we look forward to her continued success in her new role. Congratulations, Jane! 👏</div>
-            <button class="mt-2 border border-secondary text-secondary px-4 py-1 rounded-full text-xs md:text-sm flex items-center gap-1 hover:bg-secondary hover:text-white transition"><span>View More</span> <span>&rarr;</span></button>
-          </div>
-          <hr class="my-2">
-          <div class="flex gap-2 mb-2 flex-wrap">
-            <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">News</span>
-          </div>
-          <div>
-            <div class="font-bold">Employee Recognition – Star Performer of the Month</div>
-            <div class="text-xs md:text-sm mb-2">👏 Congratulations to David Osei (Risk Management) for being awarded Employee of the Month! His dedication to fraud detection and risk assessment has significantly contributed to the bank's security. Well done, David! 🎉</div>
-            <button class="mt-2 border border-secondary text-secondary px-4 py-1 rounded-full text-xs md:text-sm flex items-center gap-1 hover:bg-secondary hover:text-white transition"><span>Send Gift</span> <span>&rarr;</span></button>
+            <div class="flex gap-2 mb-3 flex-wrap">
+              <span class="bg-[#d6f5d6] text-[#3a7d3a] px-3 py-1 rounded-full text-xs font-semibold">News</span>
+            </div>
+            <div class="mb-3">
+              <div class="font-bold text-lg mb-2">Employee Recognition – Star Performer of the Month</div>
+              <div class="text-sm text-gray-700 leading-relaxed">
+                👏 Congratulations to David Osei (Risk Management) for being awarded Employee of the Month! His dedication to fraud detection and risk assessment has significantly contributed to the bank's security. Well done, David! 🎉
+              </div>
+            </div>
+            <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+              <span>Send Gift</span>
+              <span>&rarr;</span>
+            </button>
           </div>
         </aside>
       </div>
-      <!-- Info Cards -->
-      <div class="flex flex-col md:flex-row gap-6">
-        <div class="flex-1 bg-[#e5e5e5] rounded-xl p-4 md:p-6 shadow flex flex-col">
-          <div class="font-bold mb-2">Pending Tasks – Complete Your Assigned Actions!</div>
-          <div class="text-xs md:text-sm flex-1">Attention Team! Several high-priority tasks require immediate attention. Completing them on time ensures smooth operations and compliance adherence.</div>
-          <button class="mt-4 border border-secondary text-secondary px-4 py-1 rounded-full text-xs md:text-sm flex items-center gap-1 hover:bg-secondary hover:text-white transition self-end"><span>View Tasks Now</span> <span>&rarr;</span></button>
+
+      <!-- Info Cards Grid -->
+      <div class="responsive-grid">
+        <!-- Pending Tasks Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Pending Tasks – Complete Your Assigned Actions!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            Attention Team! Several high-priority tasks require immediate attention. Completing them on time ensures smooth operations and compliance adherence.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>View Tasks Now</span>
+            <span>&rarr;</span>
+          </button>
         </div>
-        <div class="flex-1 bg-[#e5e5e5] rounded-xl p-4 md:p-6 shadow flex flex-col">
-          <div class="font-bold mb-2">Departmental Targets – Stay on Track for Q2 Goals!</div>
-          <div class="text-xs md:text-sm flex-1">Our department's Q2 performance targets are set! Let's work together to achieve our milestones and exceed expectations</div>
-          <button class="mt-4 border border-secondary text-secondary px-4 py-1 rounded-full text-xs md:text-sm flex items-center gap-1 hover:bg-secondary hover:text-white transition self-end"><span>View Now</span> <span>&rarr;</span></button>
+
+        <!-- Departmental Targets Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Departmental Targets – Stay on Track for Q2 Goals!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            Our department's Q2 performance targets are set! Let's work together to achieve our milestones and exceed expectations.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>View Now</span>
+            <span>&rarr;</span>
+          </button>
         </div>
-        <div class="flex-1 bg-[#e5e5e5] rounded-xl p-4 md:p-6 shadow flex flex-col">
-          <div class="font-bold mb-2">Standard Operating Procedures (SOP) – Stay Compliant & Efficient!</div>
-          <div class="text-xs md:text-sm flex-1">New SOP updates are now available! To improve compliance and streamline processes, we've updated the Standard Operating Procedures for key workflows.</div>
-          <button class="mt-4 border border-secondary text-secondary px-4 py-1 rounded-full text-xs md:text-sm flex items-center gap-1 hover:bg-secondary hover:text-white transition self-end"><span>Read Now</span> <span>&rarr;</span></button>
+
+        <!-- SOP Card -->
+        <div class="dashboard-card bg-white rounded-xl p-6 shadow-lg border border-gray-200">
+          <div class="font-bold text-lg mb-3 text-[#45505B]">Standard Operating Procedures (SOP) – Stay Compliant & Efficient!</div>
+          <div class="text-sm text-gray-700 mb-4 leading-relaxed">
+            New SOP updates are now available! To improve compliance and streamline processes, we've updated the Standard Operating Procedures for key workflows.
+          </div>
+          <button class="btn-secondary px-4 py-2 rounded-lg text-sm flex items-center gap-2 hover:bg-[#af1f23] hover:text-white transition-colors">
+            <span>Read Now</span>
+            <span>&rarr;</span>
+          </button>
         </div>
       </div>
     </main>
