@@ -13,6 +13,23 @@ export class DashboardPageComponent implements OnInit {
   currentUser: User | null = null;
   currentSlide = 0;
   totalSlides = 4;
+  internalServicesOpen = false;
+  idrsSubmenuOpen = false;
+
+  // Services data
+  services = [
+    {
+      name: 'IDRS Service',
+      hasSubmenu: true,
+      submenu: [
+        { name: 'Search', link: '/idrs/search' },
+        { name: 'Report', link: '/idrs/report' },
+        { name: 'View', link: '/idrs/view' }
+      ]
+    },
+    { name: 'Verification', link: '/verification' },
+    { name: 'Returns', link: '/returns' }
+  ];
 
   constructor(private authService: AuthService) {}
 
@@ -47,5 +64,14 @@ export class DashboardPageComponent implements OnInit {
 
   goToSlide(index: number) {
     this.currentSlide = index;
+  }
+
+  // Dropdown/Accordion methods
+  toggleInternalServices() {
+    this.internalServicesOpen = !this.internalServicesOpen;
+  }
+
+  toggleIdrsSubmenu() {
+    this.idrsSubmenuOpen = !this.idrsSubmenuOpen;
   }
 }
