@@ -12,9 +12,11 @@
   bottom: 0;
   
   @media (max-width: 1024px) {
-    position: relative;
+    position: static;
     height: auto;
+    min-height: 100vh;
     overflow: visible;
+    width: 100%;
   }
 }
 
@@ -40,6 +42,7 @@
     flex-direction: column;
     overflow: visible;
     height: auto;
+    min-height: calc(100vh - 80px); // Account for navbar
   }
 }
 
@@ -53,8 +56,9 @@
     width: 100%;
     border-right: none;
     border-bottom: 1px solid #e2cfa2;
-    max-height: 200px;
+    max-height: 180px;
     overflow-y: auto;
+    flex-shrink: 0;
   }
 }
 
@@ -67,6 +71,8 @@
   @media (max-width: 1024px) {
     flex-direction: column;
     overflow: visible;
+    height: auto;
+    flex: 1;
   }
 }
 
@@ -79,6 +85,8 @@
   
   @media (max-width: 1024px) {
     overflow: visible;
+    height: auto;
+    flex: 1;
   }
 }
 
@@ -88,6 +96,8 @@
     width: 100%;
     border-left: none;
     border-top: 1px solid #e5e7eb;
+    height: auto;
+    overflow: visible;
   }
 }
 
@@ -219,6 +229,27 @@ table {
   @media (min-width: 768px) {
     width: 100px;
     height: 100px;
+  }
+}
+
+// Mobile-specific fixes
+@media (max-width: 1024px) {
+  body {
+    overflow-x: hidden;
+  }
+  
+  .returns-container {
+    overflow-x: hidden;
+  }
+  
+  .returns-content {
+    overflow-x: hidden;
+  }
+  
+  // Ensure tables are scrollable on mobile
+  .overflow-x-auto {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 }
 

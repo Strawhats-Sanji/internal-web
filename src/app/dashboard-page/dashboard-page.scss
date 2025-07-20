@@ -168,6 +168,23 @@
     height: 200px;
     margin-bottom: 1rem;
     display: block !important;
+    width: 100%;
+    position: relative;
+  }
+  
+  .image-slider-track {
+    width: 300%;
+    height: 100%;
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+  }
+  
+  .image-slide {
+    width: 33.333333%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
   }
 }
 
