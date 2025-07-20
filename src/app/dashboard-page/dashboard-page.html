@@ -102,7 +102,7 @@
       <div class="flex flex-col lg:flex-row gap-6 mb-8">
         <!-- Holiday Slider -->
         <div class="flex-1 flex flex-col">
-          <div class="holiday-slider-container bg-[#545a60] text-white rounded-xl w-full shadow-lg overflow-hidden">
+          <div class="holiday-slider-container bg-[#545a60] text-white rounded-xl w-full max-w-2xl shadow-lg overflow-hidden">
             <!-- Slider Content -->
             <div class="holiday-slider-track flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
               <!-- Slide 1 -->
@@ -148,7 +148,7 @@
           </div>
           
           <!-- Navigation Arrows -->
-          <div class="flex justify-between items-center w-full mt-4">
+          <div class="flex justify-between items-center w-full max-w-2xl mt-4">
             <button 
               (click)="previousSlide()" 
               class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors"
