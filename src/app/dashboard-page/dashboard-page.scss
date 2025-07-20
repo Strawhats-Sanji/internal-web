@@ -164,15 +164,15 @@
 // Holiday Slider
 .holiday-slider-container {
   position: relative;
-  min-height: 256px; // h-64
+  min-height: 224px; // h-56
   flex: 1;
   
   @media (min-width: 768px) {
-    min-height: 320px; // h-80
+    min-height: 256px; // h-64
   }
   
   @media (min-width: 1024px) {
-    min-height: 400px; // Even larger on desktop
+    min-height: 320px; // Moderate size on desktop
   }
 }
 
