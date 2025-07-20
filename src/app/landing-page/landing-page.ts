@@ -25,8 +25,14 @@ export class LandingPageComponent implements OnInit {
     }
   }
 
-  loginWithAD() {
+  async loginWithAD() {
     this.loading = true;
-    this.authService.loginWithAD();
+    try {
+      await this.authService.loginWithAD();
+    } catch (error) {
+      console.error('Login error:', error);
+      this.loading = false;
+      // You might want to show an error message to the user here
+    }
   }
 }

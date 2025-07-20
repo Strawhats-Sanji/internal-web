@@ -30,11 +30,55 @@ export class AuthService {
   /**
    * Initiate AD authentication
    */
-  loginWithAD(): void {
-    const loginUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}`;
-    console.log('Redirecting to AD service:', loginUrl);
-    console.log('Callback URL:', this.CALLBACK_URL);
-    window.location.href = loginUrl;
+  async loginWithAD(): Promise<void> {
+    try {
+      console.log('=== INITIATING AD AUTHENTICATION ===');
+      console.log('AD endpoint:', this.AD_ENDPOINT);
+      console.log('Callback URL:', this.CALLBACK_URL);
+      
+      // First, get the authentication URL from the AD service
+      const response = await fetch(this.AD_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          redirect_uri: this.CALLBACK_URL
+        })
+      });
+
+      console.log('=== AD SERVICE RESPONSE ===');
+      console.log('Response status:', response.status);
+      console.log('Response status text:', response.statusText);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log('=== AD SERVICE DATA ===');
+        console.log('Full response:', data);
+        console.log('Response keys:', Object.keys(data));
+        
+        if (data.responseCode === '00' && data.responseMessage === 'Authentication URL generated successfully' && data.authUrl) {
+          console.log('=== REDIRECTING TO MICROSOFT AUTH ===');
+          console.log('Auth URL:', data.authUrl);
+          window.location.href = data.authUrl;
+        } else {
+          console.error('=== INVALID AD SERVICE RESPONSE ===');
+          console.error('Response:', data);
+          throw new Error('Invalid authentication response from AD service');
+        }
+      } else {
+        console.error('=== AD SERVICE REQUEST FAILED ===');
+        console.error('Status:', response.status);
+        console.error('Status text:', response.statusText);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error('Failed to get authentication URL from AD service');
+      }
+    } catch (error) {
+      console.error('=== ERROR IN LOGIN WITH AD ===');
+      console.error('Error:', error);
+      throw error;
+    }
   }
 
   /**
@@ -199,8 +243,21 @@ export class AuthService {
         console.log('Full user info response:', data);
         console.log('Response keys:', Object.keys(data));
         
-        // Check if the response matches the expected format
-        if (data.responseCode === '00' && data.responseMessage === 'Successful') {
+        // Check if this is an auth URL response (initial redirect)
+        if (data.responseCode === '00' && data.responseMessage === 'Authentication URL generated successfully' && data.authUrl) {
+          console.log('=== AUTH URL RECEIVED ===');
+          console.log('Auth URL:', data.authUrl);
+          console.log('Redirect URI:', data.redirectUri);
+          console.log('Scopes:', data.scopes);
+          
+          // Store the auth URL and redirect the user
+          localStorage.setItem('pendingAuthUrl', data.authUrl);
+          window.location.href = data.authUrl;
+          return null; // Return null since we're redirecting
+        }
+        
+        // Check if the response matches the expected user info format
+        if (data.responseCode === '00' && data.responseMessage === 'Successful' && data.name && data.email) {
           const user: User = {
             name: data.name || 'Authenticated User',
             email: data.email || 'user@summitbankng.com',
@@ -217,6 +274,7 @@ export class AuthService {
           console.error('=== AD SERVICE RESPONSE ERROR ===');
           console.error('Response code:', data.responseCode);
           console.error('Response message:', data.responseMessage);
+          console.error('Response data:', data);
           return null;
         }
       } else {
