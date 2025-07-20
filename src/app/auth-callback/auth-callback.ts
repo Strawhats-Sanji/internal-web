@@ -25,24 +25,31 @@ export class AuthCallbackComponent implements OnInit {
     this.handleAuthCallback();
   }
 
-  private async handleAuthCallback() {
+  async handleAuthCallback() {
     try {
       console.log('Starting auth callback handling...');
+      this.loading = true;
+      this.error = null;
+      
       const user = await this.authService.handleAuthCallback();
       if (user) {
         console.log('Authentication successful, user:', user);
-        setTimeout(() => {
-          this.router.navigate(['/dashboard']);
-        }, 1000);
+        // Navigate immediately without delay
+        this.router.navigate(['/dashboard']);
       } else {
         console.log('Authentication failed - no user returned');
-        this.error = 'Authentication failed.';
+        this.error = 'Authentication failed. Please try again.';
         this.loading = false;
       }
     } catch (error) {
       console.error('Auth callback error:', error);
-      this.error = 'Error processing authentication response.';
+      this.error = 'Error processing authentication response. Please try again.';
       this.loading = false;
     }
+  }
+
+  retryAuth() {
+    console.log('Retrying authentication...');
+    this.handleAuthCallback();
   }
 }
