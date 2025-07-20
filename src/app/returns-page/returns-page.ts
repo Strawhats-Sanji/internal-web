@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService, User } from '../services/auth.service';
+import { NavbarComponent } from '../shared/navbar/navbar';
 
 interface DashboardCard {
   title: string;
@@ -27,7 +28,7 @@ interface HistoryEntry {
 
 @Component({
   selector: 'app-returns-page',
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent],
   templateUrl: './returns-page.html',
   styleUrl: './returns-page.scss'
 })

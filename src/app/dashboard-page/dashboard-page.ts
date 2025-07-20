@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthService, User } from '../services/auth.service';
+import { NavbarComponent } from '../shared/navbar/navbar';
 
 @Component({
   selector: 'app-dashboard-page',
-  imports: [CommonModule],
+  imports: [CommonModule, NavbarComponent],
   templateUrl: './dashboard-page.html',
   styleUrl: './dashboard-page.scss'
 })
