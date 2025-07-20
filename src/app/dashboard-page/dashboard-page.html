@@ -20,15 +20,88 @@
         </div>
       </div>
       
-
+      <!-- Mobile Slider (shown only on mobile) -->
+      <div class="mobile-slider-container md:hidden mt-6">
+        <div class="image-slider-container bg-white rounded-xl w-full shadow-lg overflow-hidden relative">
+          <!-- Slider Content -->
+          <div class="image-slider-track" [style.transform]="'translateX(-' + (currentSlide * 33.333333) + '%)'">
+            <!-- Slide 1: Team Collaboration -->
+            <div class="image-slide flex-shrink-0 w-full relative">
+              <img 
+                src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7399_yyxach.jpg" 
+                alt="Team Collaboration at Summit Bank" 
+                class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <div class="text-xl font-bold mb-1">🤝 Team Collaboration</div>
+                <div class="text-lg mb-1">Building Success Together</div>
+                <div class="text-sm opacity-90">Our dedicated team working together</div>
+              </div>
+            </div>
+            
+            <!-- Slide 2: Professional Excellence -->
+            <div class="image-slide flex-shrink-0 w-full relative">
+              <img 
+                src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7258_z6wiim.jpg" 
+                alt="Professional Excellence at Summit Bank" 
+                class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <div class="text-xl font-bold mb-1">⭐ Professional Excellence</div>
+                <div class="text-lg mb-1">Setting Industry Standards</div>
+                <div class="text-sm opacity-90">Maintaining highest standards</div>
+              </div>
+            </div>
+            
+            <!-- Slide 3: Customer Focus -->
+            <div class="image-slide flex-shrink-0 w-full relative">
+              <img 
+                src="https://res.cloudinary.com/netpoc-inc/image/upload/v1750784409/FAC_7398_qjlull.jpg" 
+                alt="Customer Focus at Summit Bank" 
+                class="w-full h-full object-cover">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent"></div>
+              <div class="absolute bottom-0 left-0 right-0 p-4 text-white">
+                <div class="text-xl font-bold mb-1">💼 Customer Focus</div>
+                <div class="text-lg mb-1">Putting Customers First</div>
+                <div class="text-sm opacity-90">Exceptional customer experiences</div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Navigation Controls Overlay -->
+          <div class="absolute bottom-3 left-3 right-3 flex justify-between items-center">
+            <button 
+              (click)="previousSlide()" 
+              class="slider-control-btn"
+              [disabled]="currentSlide === 0">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            
+            <div class="slider-indicator">
+              {{ currentSlide + 1 }} of 3
+            </div>
+            
+            <button 
+              (click)="nextSlide()" 
+              class="slider-control-btn"
+              [disabled]="currentSlide === 2">
+              <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                <path d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
     </aside>
 
     <!-- Main Content -->
     <main class="dashboard-content p-4 md:p-6 lg:p-8">
       <!-- Top Section: Holiday Card and Updates -->
       <div class="flex flex-col lg:flex-row gap-6 mb-8">
-        <!-- Image Slider -->
-        <div class="flex-1">
+        <!-- Image Slider (hidden on mobile) -->
+        <div class="flex-1 hidden md:block">
           <div class="image-slider-container bg-white rounded-xl w-full shadow-lg overflow-hidden relative">
             <!-- Slider Content -->
             <div class="image-slider-track" [style.transform]="'translateX(-' + (currentSlide * 33.333333) + '%)'">
