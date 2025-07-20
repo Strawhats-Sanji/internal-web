@@ -11,11 +11,17 @@ import { AuthService, User } from '../services/auth.service';
 export class DashboardPageComponent implements OnInit {
   drawerOpen = false;
   currentUser: User | null = null;
+  currentSlide = 0;
+  totalSlides = 4;
 
   constructor(private authService: AuthService) {}
 
   ngOnInit() {
     this.currentUser = this.authService.getCurrentUser();
+    // Auto-advance slider every 5 seconds
+    setInterval(() => {
+      this.nextSlide();
+    }, 5000);
   }
 
   openDrawer() {
@@ -28,5 +34,18 @@ export class DashboardPageComponent implements OnInit {
 
   logout() {
     this.authService.logout();
+  }
+
+  // Slider methods
+  nextSlide() {
+    this.currentSlide = (this.currentSlide + 1) % this.totalSlides;
+  }
+
+  previousSlide() {
+    this.currentSlide = this.currentSlide === 0 ? this.totalSlides - 1 : this.currentSlide - 1;
+  }
+
+  goToSlide(index: number) {
+    this.currentSlide = index;
   }
 }

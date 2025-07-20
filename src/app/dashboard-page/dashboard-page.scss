@@ -161,13 +161,40 @@
   }
 }
 
-// Holiday Card
-.holiday-card {
-  aspect-ratio: 16/9;
+// Holiday Slider
+.holiday-slider-container {
+  position: relative;
   min-height: 200px;
   
   @media (max-width: 768px) {
-    min-height: 150px;
+    min-height: 180px;
+  }
+}
+
+.holiday-slider-track {
+  width: 400%; // 4 slides * 100%
+  height: 100%;
+}
+
+.holiday-slide {
+  width: 25%; // 100% / 4 slides
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Navigation dots
+.holiday-slider-container button {
+  cursor: pointer;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 }
 
