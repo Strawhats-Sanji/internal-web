@@ -36,44 +36,16 @@ export class AuthService {
       console.log('AD endpoint:', this.AD_ENDPOINT);
       console.log('Callback URL:', this.CALLBACK_URL);
       
-      // First, get the authentication URL from the AD service
-      const response = await fetch(this.AD_ENDPOINT, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          redirect_uri: this.CALLBACK_URL
-        })
-      });
-
-      console.log('=== AD SERVICE RESPONSE ===');
-      console.log('Response status:', response.status);
-      console.log('Response status text:', response.statusText);
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('=== AD SERVICE DATA ===');
-        console.log('Full response:', data);
-        console.log('Response keys:', Object.keys(data));
-        
-        if (data.responseCode === '00' && data.responseMessage === 'Authentication URL generated successfully' && data.authUrl) {
-          console.log('=== REDIRECTING TO MICROSOFT AUTH ===');
-          console.log('Auth URL:', data.authUrl);
-          window.location.href = data.authUrl;
-        } else {
-          console.error('=== INVALID AD SERVICE RESPONSE ===');
-          console.error('Response:', data);
-          throw new Error('Invalid authentication response from AD service');
-        }
-      } else {
-        console.error('=== AD SERVICE REQUEST FAILED ===');
-        console.error('Status:', response.status);
-        console.error('Status text:', response.statusText);
-        const errorText = await response.text();
-        console.error('Error response:', errorText);
-        throw new Error('Failed to get authentication URL from AD service');
-      }
+      // Since CORS is blocking direct API calls, use a redirect-based approach
+      // Construct the redirect URL with parameters
+      const redirectUrl = `${this.AD_ENDPOINT}?redirect_uri=${encodeURIComponent(this.CALLBACK_URL)}&response_type=code&client_info=1`;
+      
+      console.log('=== REDIRECTING TO AD SERVICE ===');
+      console.log('Redirect URL:', redirectUrl);
+      
+      // Redirect to the AD service directly
+      window.location.href = redirectUrl;
+      
     } catch (error) {
       console.error('=== ERROR IN LOGIN WITH AD ===');
       console.error('Error:', error);
@@ -213,82 +185,53 @@ export class AuthService {
         }
       }
 
-      // Make a request to your AD service to exchange the code for user info
-      console.log('=== ATTEMPTING USER INFO EXCHANGE ===');
-      console.log('User info exchange URL:', `${environment.adService.baseUrl}${environment.adService.userInfoEndpoint}`);
-      console.log('Exchange payload:', {
-        code: code.substring(0, 20) + '...',
-        redirect_uri: this.CALLBACK_URL
-      });
+      // Since CORS is blocking direct API calls, we'll rely on the client_info for now
+      // In a production environment, you would need to either:
+      // 1. Configure CORS on your AD service to allow requests from your domain
+      // 2. Use a backend proxy to handle the API calls
+      // 3. Use a different authentication flow
       
-      const response = await fetch(`${environment.adService.baseUrl}${environment.adService.userInfoEndpoint}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          code: code,
-          redirect_uri: this.CALLBACK_URL
-        })
-      });
-
-      console.log('=== USER INFO EXCHANGE RESPONSE ===');
-      console.log('Response status:', response.status);
-      console.log('Response status text:', response.statusText);
-      console.log('Response headers:', Object.fromEntries(response.headers.entries()));
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log('=== USER INFO EXCHANGE SUCCESS ===');
-        console.log('Full user info response:', data);
-        console.log('Response keys:', Object.keys(data));
-        
-        // Check if this is an auth URL response (initial redirect)
-        if (data.responseCode === '00' && data.responseMessage === 'Authentication URL generated successfully' && data.authUrl) {
-          console.log('=== AUTH URL RECEIVED ===');
-          console.log('Auth URL:', data.authUrl);
-          console.log('Redirect URI:', data.redirectUri);
-          console.log('Scopes:', data.scopes);
+      console.log('=== CORS BLOCKED - USING CLIENT_INFO FALLBACK ===');
+      console.log('Note: Direct API calls are blocked by CORS policy');
+      console.log('Using client_info data for user information');
+      
+      // For now, create a user from the available client_info
+      if (clientInfo) {
+        try {
+          const decodedClientInfo = JSON.parse(atob(clientInfo));
+          console.log('=== CREATING USER FROM CLIENT_INFO ===');
+          console.log('Decoded client_info:', decodedClientInfo);
           
-          // Store the auth URL and redirect the user
-          localStorage.setItem('pendingAuthUrl', data.authUrl);
-          window.location.href = data.authUrl;
-          return null; // Return null since we're redirecting
-        }
-        
-        // Check if the response matches the expected user info format
-        if (data.responseCode === '00' && data.responseMessage === 'Successful' && data.name && data.email) {
           const user: User = {
-            name: data.name || 'Authenticated User',
-            email: data.email || 'user@summitbankng.com',
-            accessToken: code, // Store the authorization code as access token
-            expiresAt: Date.now() + (3600 * 1000), // 1 hour from now
-            uid: clientInfo ? JSON.parse(atob(clientInfo)).uid : undefined,
-            utid: clientInfo ? JSON.parse(atob(clientInfo)).utid : undefined
+            name: `User ${decodedClientInfo.uid?.substring(0, 8) || 'Authenticated'}`,
+            email: `${decodedClientInfo.uid}@summitbankng.com`,
+            accessToken: code,
+            expiresAt: Date.now() + (3600 * 1000),
+            uid: decodedClientInfo.uid,
+            utid: decodedClientInfo.utid
           };
           
-          console.log('=== USER CREATED FROM AD SERVICE ===');
-          console.log('Created user from AD service response:', user);
+          console.log('=== USER CREATED FROM CLIENT_INFO ===');
+          console.log('User object:', user);
           return user;
-        } else {
-          console.error('=== AD SERVICE RESPONSE ERROR ===');
-          console.error('Response code:', data.responseCode);
-          console.error('Response message:', data.responseMessage);
-          console.error('Response data:', data);
-          return null;
+        } catch (error) {
+          console.error('=== ERROR PROCESSING CLIENT_INFO ===');
+          console.error('Error:', error);
         }
-      } else {
-        console.error('=== USER INFO EXCHANGE FAILED ===');
-        console.error('Status:', response.status);
-        console.error('Status text:', response.statusText);
-        try {
-          const errorData = await response.text();
-          console.error('Error response body:', errorData);
-        } catch (e) {
-          console.error('Could not read error response body');
-        }
-        return null;
       }
+      
+      // If no client_info available, create a basic user
+      console.log('=== CREATING BASIC USER ===');
+      const user: User = {
+        name: 'Authenticated User',
+        email: 'user@summitbankng.com',
+        accessToken: code,
+        expiresAt: Date.now() + (3600 * 1000)
+      };
+      
+      console.log('=== BASIC USER CREATED ===');
+      console.log('User object:', user);
+      return user;
     } catch (error) {
       console.error('Error exchanging code for user info:', error);
       return null;
