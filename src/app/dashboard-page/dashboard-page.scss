@@ -164,10 +164,15 @@
 // Holiday Slider
 .holiday-slider-container {
   position: relative;
-  min-height: 200px;
+  min-height: 256px; // h-64
+  flex: 1;
   
-  @media (max-width: 768px) {
-    min-height: 180px;
+  @media (min-width: 768px) {
+    min-height: 320px; // h-80
+  }
+  
+  @media (min-width: 1024px) {
+    min-height: 400px; // Even larger on desktop
   }
 }
 
@@ -184,19 +189,7 @@
   justify-content: center;
 }
 
-// Navigation dots
-.holiday-slider-container button {
-  cursor: pointer;
-  
-  &:hover {
-    opacity: 0.8;
-  }
-  
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
-  }
-}
+
 
 // Updates Section
 .updates-section {

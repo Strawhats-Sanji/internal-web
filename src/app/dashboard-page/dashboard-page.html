@@ -102,69 +102,71 @@
       <div class="flex flex-col lg:flex-row gap-6 mb-8">
         <!-- Holiday Slider -->
         <div class="flex-1 flex flex-col">
-          <div class="holiday-slider-container bg-[#545a60] text-white rounded-xl w-full max-w-lg shadow-lg overflow-hidden">
+          <div class="holiday-slider-container bg-[#545a60] text-white rounded-xl w-full shadow-lg overflow-hidden">
             <!-- Slider Content -->
             <div class="holiday-slider-track flex transition-transform duration-500 ease-in-out" [style.transform]="'translateX(-' + (currentSlide * 100) + '%)'">
               <!-- Slide 1 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-48 flex flex-col items-center justify-center p-6">
+              <div class="holiday-slide flex-shrink-0 w-full h-64 md:h-80 flex flex-col items-center justify-center p-6">
                 <div class="text-center">
-                  <div class="text-2xl md:text-3xl font-bold mb-2">🎄 Christmas Day</div>
-                  <div class="text-lg md:text-xl mb-2">December 25, 2024</div>
-                  <div class="text-sm opacity-90">Bank Holiday - All branches closed</div>
+                  <div class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">🎄 Christmas Day</div>
+                  <div class="text-xl md:text-2xl lg:text-3xl mb-3">December 25, 2024</div>
+                  <div class="text-lg md:text-xl opacity-90">Bank Holiday - All branches closed</div>
+                  <div class="text-sm md:text-base opacity-75 mt-2">Enjoy the festive season with family and friends!</div>
                 </div>
               </div>
               
               <!-- Slide 2 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-48 flex flex-col items-center justify-center p-6">
+              <div class="holiday-slide flex-shrink-0 w-full h-64 md:h-80 flex flex-col items-center justify-center p-6">
                 <div class="text-center">
-                  <div class="text-2xl md:text-3xl font-bold mb-2">🎊 New Year's Day</div>
-                  <div class="text-lg md:text-xl mb-2">January 1, 2025</div>
-                  <div class="text-sm opacity-90">Bank Holiday - All branches closed</div>
+                  <div class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">🎊 New Year's Day</div>
+                  <div class="text-xl md:text-2xl lg:text-3xl mb-3">January 1, 2025</div>
+                  <div class="text-lg md:text-xl opacity-90">Bank Holiday - All branches closed</div>
+                  <div class="text-sm md:text-base opacity-75 mt-2">Welcome to a new year of opportunities!</div>
                 </div>
               </div>
               
               <!-- Slide 3 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-48 flex flex-col items-center justify-center p-6">
+              <div class="holiday-slide flex-shrink-0 w-full h-64 md:h-80 flex flex-col items-center justify-center p-6">
                 <div class="text-center">
-                  <div class="text-2xl md:text-3xl font-bold mb-2">💝 Valentine's Day</div>
-                  <div class="text-lg md:text-xl mb-2">February 14, 2025</div>
-                  <div class="text-sm opacity-90">Special customer appreciation day</div>
+                  <div class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">💝 Valentine's Day</div>
+                  <div class="text-xl md:text-2xl lg:text-3xl mb-3">February 14, 2025</div>
+                  <div class="text-lg md:text-xl opacity-90">Special customer appreciation day</div>
+                  <div class="text-sm md:text-base opacity-75 mt-2">Show love to our valued customers!</div>
                 </div>
               </div>
               
               <!-- Slide 4 -->
-              <div class="holiday-slide flex-shrink-0 w-full h-48 flex flex-col items-center justify-center p-6">
+              <div class="holiday-slide flex-shrink-0 w-full h-64 md:h-80 flex flex-col items-center justify-center p-6">
                 <div class="text-center">
-                  <div class="text-2xl md:text-3xl font-bold mb-2">🌍 Independence Day</div>
-                  <div class="text-lg md:text-xl mb-2">March 6, 2025</div>
-                  <div class="text-sm opacity-90">National Holiday - Limited services</div>
+                  <div class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">🌍 Independence Day</div>
+                  <div class="text-xl md:text-2xl lg:text-3xl mb-3">March 6, 2025</div>
+                  <div class="text-lg md:text-xl opacity-90">National Holiday - Limited services</div>
+                  <div class="text-sm md:text-base opacity-75 mt-2">Celebrating Ghana's independence!</div>
                 </div>
               </div>
             </div>
-            
-
           </div>
           
           <!-- Navigation Arrows -->
-          <div class="flex justify-between items-center w-full max-w-lg mt-4">
+          <div class="flex justify-between items-center w-full mt-4">
             <button 
               (click)="previousSlide()" 
-              class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors"
+              class="p-3 rounded-lg hover:bg-[#e2cfa2] transition-colors"
               [disabled]="currentSlide === 0">
-              <svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="h-6 w-6 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M15 19l-7-7 7-7" />
               </svg>
             </button>
             
-            <div class="text-sm text-[#545a60] font-medium">
+            <div class="text-base text-[#545a60] font-medium">
               {{ currentSlide + 1 }} of 4
             </div>
             
             <button 
               (click)="nextSlide()" 
-              class="p-2 rounded-lg hover:bg-[#e2cfa2] transition-colors"
+              class="p-3 rounded-lg hover:bg-[#e2cfa2] transition-colors"
               [disabled]="currentSlide === 3">
-              <svg class="h-5 w-5 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <svg class="h-6 w-6 text-[#545a60]" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                 <path d="M9 5l7 7-7 7" />
               </svg>
             </button>
@@ -172,7 +174,7 @@
         </div>
 
         <!-- Updates Section -->
-        <aside class="updates-section w-full lg:w-96 bg-[#f8f6f1] rounded-xl p-6 shadow-lg">
+        <aside class="updates-section w-full lg:w-80 bg-[#f8f6f1] rounded-xl p-6 shadow-lg">
           <h3 class="text-xl font-semibold mb-4">Latest Updates</h3>
           
           <!-- Update Item 1 -->
