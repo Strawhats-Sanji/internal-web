@@ -166,7 +166,8 @@
 .mobile-slider-container {
   .image-slider-container {
     height: 200px;
-    margin-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    margin-top: 1rem;
     display: block !important;
     width: 100%;
     position: relative;
@@ -257,6 +258,11 @@
 .updates-section {
   @media (max-width: 1024px) {
     order: -1;
+    margin-top: 1.5rem;
+  }
+  
+  @media (max-width: 768px) {
+    margin-top: 2rem;
   }
 }
 
