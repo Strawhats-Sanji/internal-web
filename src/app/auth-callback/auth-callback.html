@@ -41,3 +41,9 @@
     </ng-template>
   </div>
 </div>
+
+<!-- Get Started Guide Modal -->
+<app-get-started-guide 
+  *ngIf="showGetStartedGuide"
+  (closeModal)="onGetStartedGuideClose()">
+</app-get-started-guide>
