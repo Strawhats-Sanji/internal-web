@@ -61,27 +61,30 @@
   <!-- Success Modal -->
   <div *ngIf="showSuccessModal && verificationResult" class="modal-overlay">
     <div class="modal-content success-modal">
-      <h2 class="modal-title">Validation Result</h2>
-      <div class="result-message success">
-        <svg class="w-5 h-5 mr-2 inline-block" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
-        {{ verificationResult.message }}
-      </div>
+      <h5 class="modal-title">Validation Result</h5>
+      <div class="alert alert-success mt-3">✅ {{ verificationResult.message }}</div>
+
       <div class="flex flex-col items-center mt-4">
-        <img [src]="verificationResult.data?.photo" alt="User Photo" class="user-photo">
-        <div class="details-grid">
-          <div class="detail-item"><span class="font-semibold">Central ID:</span> {{ verificationResult.data?.centralId }}</div>
-          <div class="detail-item"><span class="font-semibold">Surname:</span> {{ verificationResult.data?.surname }}</div>
-          <div class="detail-item"><span class="font-semibold">First Name:</span> {{ verificationResult.data?.firstName }}</div>
-          <div class="detail-item"><span class="font-semibold">Middle Name:</span> {{ verificationResult.data?.middleName }}</div>
-          <div class="detail-item"><span class="font-semibold">Birth Date:</span> {{ verificationResult.data?.birthDate }}</div>
-          <div class="detail-item"><span class="font-semibold">Gender:</span> {{ verificationResult.data?.gender }}</div>
-          <div class="detail-item"><span class="font-semibold">Birth Country:</span> {{ verificationResult.data?.birthCountry }}</div>
-          <div class="detail-item"><span class="font-semibold">Address:</span> {{ verificationResult.data?.address }}</div>
-          <div class="detail-item"><span class="font-semibold">State:</span> {{ verificationResult.data?.state }}</div>
-          <div class="detail-item"><span class="font-semibold">Phone:</span> {{ verificationResult.data?.phone }}</div>
-          <div class="detail-item"><span class="font-semibold">State of Origin:</span> {{ verificationResult.data?.stateOfOrigin }}</div>
-        </div>
+        <img *ngIf="verificationResult.data?.photo || verificationResult.data?.face_image"
+             [src]="'data:image/jpeg;base64,' + (verificationResult.data?.photo || verificationResult.data?.face_image)"
+             alt="User Photo" class="user-photo">
+        <div *ngIf="!verificationResult.data?.photo && !verificationResult.data?.face_image" class="text-muted my-4">No photo available</div>
+
+        <ul class="details-list">
+          <li><strong>Central ID:</strong> {{ verificationResult.data?.centralID || verificationResult.data?.customer_id || 'N/A' }}</li>
+          <li><strong>Surname:</strong> {{ verificationResult.data?.surname || 'N/A' }}</li>
+          <li><strong>First Name:</strong> {{ verificationResult.data?.firstname || verificationResult.data?.first_name || 'N/A' }}</li>
+          <li><strong>Middle Name:</strong> {{ verificationResult.data?.middlename || verificationResult.data?.middle_name || 'N/A' }}</li>
+          <li><strong>Birth Date:</strong> {{ verificationResult.data?.birthdate || verificationResult.data?.DateOfBirth || 'N/A' }}</li>
+          <li><strong>Gender:</strong> {{ verificationResult.data?.gender || 'N/A' }}</li>
+          <li><strong>Birth Country:</strong> {{ verificationResult.data?.birthcountry || verificationResult.data?.nationality || 'N/A' }}</li>
+          <li><strong>Address:</strong> {{ verificationResult.data?.residence_AdressLine1 || verificationResult.data?.residential_address || 'N/A' }}</li>
+          <li><strong>State:</strong> {{ verificationResult.data?.residence_state || verificationResult.data?.state_of_capture || 'N/A' }}</li>
+          <li><strong>Phone:</strong> {{ verificationResult.data?.telephoneno || verificationResult.data?.Phone_number1 || 'N/A' }}</li>
+          <li><strong>State of Origin:</strong> {{ verificationResult.data?.self_origin_state || verificationResult.data?.state_of_origin || 'N/A' }}</li>
+        </ul>
       </div>
+
       <button (click)="resetModals()" class="close-button">Close</button>
     </div>
   </div>

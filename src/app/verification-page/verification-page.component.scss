@@ -62,18 +62,18 @@
 }
 
 .modal-content {
-  @apply bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl;
+  @apply bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl text-center;
 }
 
 .modal-title {
-  @apply text-2xl font-bold text-center mb-4 text-[#45505B];
+  @apply text-2xl font-bold mb-4 text-[#45505B];
 }
 
-.result-message {
-  @apply mt-1 p-4 rounded-lg text-center font-medium flex items-center justify-center;
+.alert {
+  @apply p-4 rounded-lg text-center font-medium flex items-center justify-center;
 }
 
-.result-message.success {
+.alert-success {
   @apply bg-green-100 text-green-800;
 }
 
@@ -81,12 +81,12 @@
   @apply w-32 h-32 rounded-lg object-cover border-4 border-white shadow-md my-4;
 }
 
-.details-grid {
-  @apply w-full grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mt-6 text-left;
+.details-list {
+  @apply w-full list-none p-0 mt-6 text-left;
 }
 
-.detail-item {
-  @apply border-b border-gray-200 py-2;
+.details-list li {
+  @apply border-b border-gray-200 py-3 flex justify-between;
 }
 
 .close-button {

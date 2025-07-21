@@ -3,23 +3,35 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { delay } from 'rxjs/operators';
 
+export interface VerificationData {
+  photo?: string;
+  face_image?: string;
+  centralID?: string;
+  customer_id?: string;
+  surname?: string;
+  firstname?: string;
+  first_name?: string;
+  middlename?: string;
+  middle_name?: string;
+  birthdate?: string;
+  DateOfBirth?: string;
+  gender?: string;
+  birthcountry?: string;
+  nationality?: string;
+  residence_AdressLine1?: string;
+  residential_address?: string;
+  residence_state?: string;
+  state_of_capture?: string;
+  telephoneno?: string;
+  Phone_number1?: string;
+  self_origin_state?: string;
+  state_of_origin?: string;
+}
+
 export interface VerificationResult {
   success: boolean;
   message: string;
-  data?: {
-    centralId: string;
-    surname: string;
-    firstName: string;
-    middleName: string;
-    birthDate: string;
-    gender: string;
-    birthCountry: string;
-    address: string;
-    state: string;
-    phone: string;
-    stateOfOrigin: string;
-    photo: string;
-  };
+  data?: VerificationData;
 }
 
 @Injectable({
@@ -33,34 +45,30 @@ export class VerificationService {
   verify(type: 'nin' | 'bvn', number: string): Observable<VerificationResult> {
     const requestBody = { type, number };
     // MOCK API FOR DEMONSTRATION
-    // Replace with actual http.post call when the API is ready
     // return this.http.post<VerificationResult>(this.apiUrl, requestBody);
 
     // --- MOCK IMPLEMENTATION ---
-    console.log(`Mock verifying ${type.toUpperCase()}:`, number);
     if (number && number.length === 11) {
-      // Simulate a successful API response
       const mockSuccess: VerificationResult = {
         success: true,
         message: `${type.toUpperCase()} is valid. Details below:`,
         data: {
-          centralId: '100129641',
+          photo: '...', // Your base64 string here
+          centralID: '100129641',
           surname: 'AYENOTO',
-          firstName: 'PETER',
-          middleName: 'ADESHINA',
-          birthDate: '30-05-1997',
+          firstname: 'PETER',
+          middlename: 'ADESHINA',
+          birthdate: '30-05-1997',
           gender: 'm',
-          birthCountry: 'nigeria',
-          address: '20 DANIEL FAFUNMI STREET',
-          state: 'Lagos',
-          phone: '07064767691',
-          stateOfOrigin: 'Ondo',
-          photo: 'https://i.pravatar.cc/150?u=peter'
+          birthcountry: 'nigeria',
+          residence_AdressLine1: '20 DANIEL FAFUNMI STREET',
+          residence_state: 'Lagos',
+          telephoneno: '07064767691',
+          self_origin_state: 'Ondo'
         }
       };
       return of(mockSuccess).pipe(delay(1500));
     } else {
-      // Simulate an error response
       const mockError = {
         success: false,
         message: `Invalid ${type.toUpperCase()} provided. Please check the number and try again.`
