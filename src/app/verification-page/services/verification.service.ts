@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
+// Interface for the user data part of the API response
 export interface VerificationData {
   photo?: string;
   face_image?: string;
@@ -28,10 +29,20 @@ export interface VerificationData {
   state_of_origin?: string;
 }
 
+// Interface for the simplified structure the component uses
 export interface VerificationResult {
   success: boolean;
   message: string;
   data?: VerificationData;
+}
+
+// Interface for the raw, complex API response
+interface RawApiResponse {
+  success: boolean;
+  data: [
+    { data: VerificationData },
+    { message: string }
+  ];
 }
 
 @Injectable({
@@ -44,9 +55,16 @@ export class VerificationService {
 
   verify(type: 'nin' | 'bvn', number: string): Observable<VerificationResult> {
     const requestBody = { type, number };
-    
-    // Using the live API endpoint
-    return this.http.post<VerificationResult>(this.apiUrl, requestBody).pipe(
+
+    return this.http.post<RawApiResponse>(this.apiUrl, requestBody).pipe(
+      map(response => {
+        // Transform the complex API response into the simple structure our component needs
+        return {
+          success: response.success,
+          message: response.data[1].message,
+          data: response.data[0].data
+        };
+      }),
       catchError(this.handleError)
     );
   }
