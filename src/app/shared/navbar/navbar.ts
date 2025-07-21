@@ -5,9 +5,10 @@ import { AuthService, User } from '../../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
+  standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.scss'
+  styleUrls: ['./navbar.scss']
 })
 export class NavbarComponent implements OnInit {
   currentUser: User | null = null;
