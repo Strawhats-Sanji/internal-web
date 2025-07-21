@@ -147,7 +147,13 @@
 
 .mobile-drawer .drawer-content a:hover,
 .mobile-drawer .drawer-content button:hover {
-  color: #fff !important;
+  color: #333 !important;
+}
+
+// Also update any other white text in the drawer (e.g., logout button)
+.mobile-drawer .drawer-content .bg-\[\#af1f23\],
+.mobile-drawer .drawer-content .hover\:bg-\[\#d13a3e\] {
+  color: #222 !important;
 }
 
 // NOTE: If the drawer is still not visible, check for overflow:hidden or restrictive height on body, html, or parent containers in global styles.
