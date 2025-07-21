@@ -1,5 +1,5 @@
 .verification-container {
-  @apply bg-[#ede3cc] min-h-screen font-sans;
+  @apply bg-[#ede3cc] min-h-screen w-full flex flex-col font-sans relative overflow-hidden;
 }
 
 .page-header {
