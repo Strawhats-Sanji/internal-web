@@ -1,4 +1,69 @@
 .verification-container {
-  min-height: 100vh;
-  background: #f9fafb;
+  @apply bg-[#ede3cc] min-h-screen font-sans;
+}
+
+.page-header {
+  @apply text-center py-10 px-4;
+}
+
+.page-title {
+  @apply text-4xl font-bold text-[#45505B] mb-2;
+}
+
+.page-subtitle {
+  @apply text-lg text-gray-600 max-w-2xl mx-auto;
+}
+
+.content-area {
+  @apply px-4 sm:px-6 lg:px-8 pb-12;
+}
+
+.card-grid {
+  @apply grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto;
+}
+
+.verification-card {
+  @apply bg-white rounded-2xl shadow-lg p-8 transform transition-transform duration-300 hover:scale-[1.02];
+}
+
+.card-title {
+  @apply text-2xl font-semibold text-[#45505B] mb-2;
+}
+
+.card-description {
+  @apply text-gray-500 mb-6;
+}
+
+.form-content {
+  @apply space-y-6;
+}
+
+.input-group {
+  @apply flex flex-col;
+}
+
+.input-label {
+  @apply mb-2 font-medium text-gray-700;
+}
+
+.form-input {
+  @apply w-full border border-gray-300 rounded-lg px-4 py-3 bg-gray-50 focus:ring-2 focus:ring-[#af1f23] focus:border-transparent transition-colors;
+  @apply disabled:bg-gray-200 disabled:cursor-not-allowed;
+}
+
+.submit-button {
+  @apply w-full bg-[#af1f23] text-white py-3 rounded-lg font-semibold text-lg hover:bg-[#9a1a1e] transition-all duration-300;
+  @apply disabled:bg-gray-400 disabled:cursor-not-allowed;
+}
+
+.result-message {
+  @apply mt-6 p-4 rounded-lg text-center font-medium;
+}
+
+.result-message.success {
+  @apply bg-green-100 text-green-800;
+}
+
+.result-message.error {
+  @apply bg-red-100 text-red-800;
 } 
