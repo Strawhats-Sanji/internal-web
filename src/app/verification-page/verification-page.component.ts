@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from '../shared/navbar/navbar';
+import { VerificationService, VerificationResult } from './services/verification.service';
 
 @Component({
   selector: 'app-verification-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavbarComponent],
+  imports: [CommonModule, FormsModule, NavbarComponent, HttpClientModule],
   templateUrl: './verification-page.component.html',
   styleUrls: ['./verification-page.component.scss']
 })
@@ -17,28 +19,49 @@ export class VerificationPageComponent {
   bvnLoading = false;
   ninLoading = false;
 
-  bvnResult: { success: boolean, message: string } | null = null;
-  ninResult: { success: boolean, message: string } | null = null;
+  verificationResult: VerificationResult | null = null;
+  errorMessage: string | null = null;
 
-  handleBvnSubmit() {
-    this.bvnLoading = true;
-    this.bvnResult = null;
-    console.log('Verifying BVN:', this.bvnNumber);
-    // Simulate API call
-    setTimeout(() => {
-      this.bvnLoading = false;
-      this.bvnResult = { success: true, message: `BVN ${this.bvnNumber} verified successfully.` };
-    }, 1500);
+  showSuccessModal = false;
+  showErrorModal = false;
+
+  constructor(private verificationService: VerificationService) {}
+
+  handleVerification(type: 'nin' | 'bvn') {
+    const number = type === 'nin' ? this.ninNumber : this.bvnNumber;
+    if (type === 'nin') {
+      this.ninLoading = true;
+    } else {
+      this.bvnLoading = true;
+    }
+    this.resetModals();
+
+    this.verificationService.verify(type, number).subscribe({
+      next: (result) => {
+        this.verificationResult = result;
+        this.showSuccessModal = true;
+        this.stopLoading(type);
+      },
+      error: (err) => {
+        this.errorMessage = err.message || 'An unknown error occurred.';
+        this.showErrorModal = true;
+        this.stopLoading(type);
+      }
+    });
   }
 
-  handleNinSubmit() {
-    this.ninLoading = true;
-    this.ninResult = null;
-    console.log('Verifying NIN:', this.ninNumber);
-    // Simulate API call
-    setTimeout(() => {
+  private stopLoading(type: 'nin' | 'bvn') {
+    if (type === 'nin') {
       this.ninLoading = false;
-      this.ninResult = { success: true, message: `NIN ${this.ninNumber} verified successfully.` };
-    }, 1500);
+    } else {
+      this.bvnLoading = false;
+    }
+  }
+
+  resetModals() {
+    this.showSuccessModal = false;
+    this.showErrorModal = false;
+    this.verificationResult = null;
+    this.errorMessage = null;
   }
 } 

@@ -12,7 +12,7 @@
       <div class="verification-card">
         <h2 class="card-title">Validate BVN</h2>
         <p class="card-description">Enter the 11-digit Bank Verification Number.</p>
-        <form (ngSubmit)="handleBvnSubmit()" class="form-content">
+        <form (ngSubmit)="handleVerification('bvn')" class="form-content">
           <div class="input-group">
             <label for="bvn" class="input-label">Enter BVN</label>
             <input type="text" id="bvn" name="bvn" class="form-input" placeholder="e.g., 22123456789"
@@ -30,16 +30,13 @@
             </span>
           </button>
         </form>
-        <div *ngIf="bvnResult" class="result-message" [ngClass]="{'success': bvnResult.success, 'error': !bvnResult.success}">
-          {{ bvnResult.message }}
-        </div>
       </div>
 
       <!-- NIN Verification Card -->
       <div class="verification-card">
         <h2 class="card-title">Validate NIN</h2>
         <p class="card-description">Enter the 11-digit National Identity Number.</p>
-        <form (ngSubmit)="handleNinSubmit()" class="form-content">
+        <form (ngSubmit)="handleVerification('nin')" class="form-content">
           <div class="input-group">
             <label for="nin" class="input-label">Enter NIN</label>
             <input type="text" id="nin" name="nin" class="form-input" placeholder="e.g., 12345678901"
@@ -57,10 +54,45 @@
             </span>
           </button>
         </form>
-        <div *ngIf="ninResult" class="result-message" [ngClass]="{'success': ninResult.success, 'error': !ninResult.success}">
-          {{ ninResult.message }}
-        </div>
       </div>
     </div>
   </main>
+
+  <!-- Success Modal -->
+  <div *ngIf="showSuccessModal && verificationResult" class="modal-overlay">
+    <div class="modal-content success-modal">
+      <h2 class="modal-title">Validation Result</h2>
+      <div class="result-message success">
+        <svg class="w-5 h-5 mr-2 inline-block" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+        {{ verificationResult.message }}
+      </div>
+      <div class="flex flex-col items-center mt-4">
+        <img [src]="verificationResult.data?.photo" alt="User Photo" class="user-photo">
+        <div class="details-grid">
+          <div class="detail-item"><span class="font-semibold">Central ID:</span> {{ verificationResult.data?.centralId }}</div>
+          <div class="detail-item"><span class="font-semibold">Surname:</span> {{ verificationResult.data?.surname }}</div>
+          <div class="detail-item"><span class="font-semibold">First Name:</span> {{ verificationResult.data?.firstName }}</div>
+          <div class="detail-item"><span class="font-semibold">Middle Name:</span> {{ verificationResult.data?.middleName }}</div>
+          <div class="detail-item"><span class="font-semibold">Birth Date:</span> {{ verificationResult.data?.birthDate }}</div>
+          <div class="detail-item"><span class="font-semibold">Gender:</span> {{ verificationResult.data?.gender }}</div>
+          <div class="detail-item"><span class="font-semibold">Birth Country:</span> {{ verificationResult.data?.birthCountry }}</div>
+          <div class="detail-item"><span class="font-semibold">Address:</span> {{ verificationResult.data?.address }}</div>
+          <div class="detail-item"><span class="font-semibold">State:</span> {{ verificationResult.data?.state }}</div>
+          <div class="detail-item"><span class="font-semibold">Phone:</span> {{ verificationResult.data?.phone }}</div>
+          <div class="detail-item"><span class="font-semibold">State of Origin:</span> {{ verificationResult.data?.stateOfOrigin }}</div>
+        </div>
+      </div>
+      <button (click)="resetModals()" class="close-button">Close</button>
+    </div>
+  </div>
+
+  <!-- Error Modal -->
+  <div *ngIf="showErrorModal" class="modal-overlay">
+    <div class="modal-content error-modal">
+       <h2 class="modal-title text-red-600">Validation Failed</h2>
+       <p class="text-gray-600 my-4">{{ errorMessage }}</p>
+       <button (click)="resetModals()" class="close-button error">Try Again</button>
+    </div>
+  </div>
+
 </div> 

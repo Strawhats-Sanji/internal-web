@@ -56,14 +56,43 @@
   @apply disabled:bg-gray-400 disabled:cursor-not-allowed;
 }
 
+/* Modal Styles */
+.modal-overlay {
+  @apply fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50;
+}
+
+.modal-content {
+  @apply bg-white rounded-2xl shadow-xl p-8 w-full max-w-2xl;
+}
+
+.modal-title {
+  @apply text-2xl font-bold text-center mb-4 text-[#45505B];
+}
+
 .result-message {
-  @apply mt-6 p-4 rounded-lg text-center font-medium;
+  @apply mt-1 p-4 rounded-lg text-center font-medium flex items-center justify-center;
 }
 
 .result-message.success {
   @apply bg-green-100 text-green-800;
 }
 
-.result-message.error {
-  @apply bg-red-100 text-red-800;
+.user-photo {
+  @apply w-32 h-32 rounded-lg object-cover border-4 border-white shadow-md my-4;
+}
+
+.details-grid {
+  @apply w-full grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-4 mt-6 text-left;
+}
+
+.detail-item {
+  @apply border-b border-gray-200 py-2;
+}
+
+.close-button {
+  @apply w-full mt-8 bg-gray-200 text-gray-800 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors;
+}
+
+.close-button.error {
+    @apply bg-red-600 text-white hover:bg-red-700;
 } 
