@@ -106,7 +106,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 9999;
+  z-index: 1050;
   
   .drawer-overlay {
     position: absolute;
@@ -129,7 +129,7 @@
     box-shadow: -4px 0 25px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
-    z-index: 10000;
+    z-index: 1100;
     transform: translateX(100%);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     
@@ -138,3 +138,5 @@
     }
   }
 }
+
+// NOTE: If the drawer is still not visible, check for overflow:hidden or restrictive height on body, html, or parent containers in global styles.
