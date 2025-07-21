@@ -403,3 +403,44 @@
     color: #ffffff;
   }
 }
+
+@media (max-width: 768px) {
+  // Good Morning and user info
+  .user-profile .user-info {
+    color: #222 !important;
+    .text-lg, .text-xl, .font-semibold, .font-bold, .text-sm, .text-xs {
+      color: #222 !important;
+    }
+  }
+
+  // Slider captions (override text-white)
+  .mobile-slider-container .text-white,
+  .mobile-slider-container .text-xl,
+  .mobile-slider-container .text-lg,
+  .mobile-slider-container .text-sm {
+    color: #222 !important;
+    text-shadow: none !important;
+  }
+
+  // Latest Updates card titles
+  .mobile-updates-section h3,
+  .mobile-updates-section .font-bold,
+  .mobile-updates-section .text-lg,
+  .mobile-updates-section .text-xl,
+  .mobile-updates-section .font-semibold {
+    color: #222 !important;
+  }
+
+  // Buttons
+  .mobile-updates-section .btn-secondary,
+  .mobile-info-cards .btn-secondary {
+    color: #222 !important;
+    background: #fff !important;
+    border-color: #af1f23 !important;
+  }
+  .mobile-updates-section .btn-secondary:hover,
+  .mobile-info-cards .btn-secondary:hover {
+    background: #f8f6f1 !important;
+    color: #af1f23 !important;
+  }
+}
