@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of, throwError } from 'rxjs';
-import { delay } from 'rxjs/operators';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 export interface VerificationData {
   photo?: string;
@@ -44,37 +44,22 @@ export class VerificationService {
 
   verify(type: 'nin' | 'bvn', number: string): Observable<VerificationResult> {
     const requestBody = { type, number };
-    // MOCK API FOR DEMONSTRATION
-    // return this.http.post<VerificationResult>(this.apiUrl, requestBody);
+    
+    // Using the live API endpoint
+    return this.http.post<VerificationResult>(this.apiUrl, requestBody).pipe(
+      catchError(this.handleError)
+    );
+  }
 
-    // --- MOCK IMPLEMENTATION ---
-    if (number && number.length === 11) {
-      const mockSuccess: VerificationResult = {
-        success: true,
-        message: `${type.toUpperCase()} is valid. Details below:`,
-        data: {
-          photo: '...', // Your base64 string here
-          centralID: '100129641',
-          surname: 'AYENOTO',
-          firstname: 'PETER',
-          middlename: 'ADESHINA',
-          birthdate: '30-05-1997',
-          gender: 'm',
-          birthcountry: 'nigeria',
-          residence_AdressLine1: '20 DANIEL FAFUNMI STREET',
-          residence_state: 'Lagos',
-          telephoneno: '07064767691',
-          self_origin_state: 'Ondo'
-        }
-      };
-      return of(mockSuccess).pipe(delay(1500));
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred. Please try again later.';
+    if (error.error instanceof ErrorEvent) {
+      // Client-side or network error
+      errorMessage = `A network error occurred: ${error.error.message}`;
     } else {
-      const mockError = {
-        success: false,
-        message: `Invalid ${type.toUpperCase()} provided. Please check the number and try again.`
-      };
-      return throwError(() => mockError).pipe(delay(1500));
+      // Backend returned an unsuccessful response code
+      errorMessage = `Server error: ${error.status}. ${error.error?.message || 'Please try again.'}`;
     }
-    // --- END MOCK ---
+    return throwError(() => ({ success: false, message: errorMessage }));
   }
 } 
