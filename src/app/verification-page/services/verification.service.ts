@@ -16,6 +16,7 @@ export interface VerificationData {
   middle_name?: string;
   birthdate?: string;
   DateOfBirth?: string;
+  date_of_birth?: string;
   gender?: string;
   birthcountry?: string;
   nationality?: string;
@@ -49,7 +50,7 @@ interface RawApiResponse {
   providedIn: 'root'
 })
 export class VerificationService {
-  private apiUrl = 'http://172.29.86.16:30796/v1/validate';
+  private apiUrl = 'https://intranet.summitbankng.com/v1/validate';
 
   constructor(private http: HttpClient) {}
 
