@@ -38,7 +38,7 @@ export interface VerificationResult {
   providedIn: 'root'
 })
 export class VerificationService {
-  private apiUrl = 'http://172.29.86.16:30796/v1/verify';
+  private apiUrl = 'http://172.29.86.16:30796/v1/validate';
 
   constructor(private http: HttpClient) {}
 
