@@ -1,16 +1,11 @@
-import { Component, signal, OnInit } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [RouterModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrls: ['./app.scss']
 })
-export class App implements OnInit {
-  protected readonly title = signal('staff-intranet');
-
-  ngOnInit() {
-    console.log('App component initialized');
-  }
-}
+export class AppComponent {}
