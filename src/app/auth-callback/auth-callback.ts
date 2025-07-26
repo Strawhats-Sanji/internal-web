@@ -21,21 +21,15 @@ export class AuthCallbackComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log('Auth callback component initialized');
-    console.log('Current URL:', window.location.href);
-    console.log('Search params:', window.location.search);
     this.handleAuthCallback();
   }
 
   async handleAuthCallback() {
     try {
-      console.log('Starting auth callback handling...');
       this.loading = true;
       this.error = null;
-      
       const user = await this.authService.handleAuthCallback();
       if (user) {
-        console.log('Authentication successful, user:', user);
         // Show get-started guide modal for new users
         this.showGetStartedGuide = true;
       } else {
@@ -44,7 +38,6 @@ export class AuthCallbackComponent implements OnInit {
         this.loading = false;
       }
     } catch (error) {
-      console.error('Auth callback error:', error);
       this.error = 'Error processing authentication response. Please try again.';
       this.loading = false;
     }
