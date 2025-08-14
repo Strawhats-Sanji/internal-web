@@ -17,10 +17,12 @@ export class NavbarComponent implements OnInit {
   // Navbar dropdown states (separate from drawer)
   navbarInternalServicesOpen = false;
   navbarIdrsSubmenuOpen = false;
+  navbarItSupportOpen = false;
   
   // Drawer accordion states (separate from navbar)
   drawerInternalServicesOpen = false;
   drawerIdrsSubmenuOpen = false;
+  drawerItSupportOpen = false;
 
   // Internal Services Data
   internalServices = [
@@ -78,6 +80,34 @@ export class NavbarComponent implements OnInit {
     }, 300); // Increased to 300ms to give more time for navigation
   }
 
+  // IT Support dropdown handlers
+  onItSupportMouseEnter() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+    this.navbarItSupportOpen = true;
+  }
+
+  onItSupportMouseLeave() {
+    this.closeTimeout = setTimeout(() => {
+      this.navbarItSupportOpen = false;
+    }, 150);
+  }
+
+  onItDropdownMouseEnter() {
+    if (this.closeTimeout) {
+      clearTimeout(this.closeTimeout);
+      this.closeTimeout = null;
+    }
+  }
+
+  onItDropdownMouseLeave() {
+    this.closeTimeout = setTimeout(() => {
+      this.navbarItSupportOpen = false;
+    }, 300);
+  }
+
   // Prevent closing when clicking on menu items
   onMenuItemClick() {
     // Keep dropdown open briefly to allow navigation
@@ -112,6 +142,10 @@ export class NavbarComponent implements OnInit {
 
   toggleDrawerIdrsSubmenu() {
     this.drawerIdrsSubmenuOpen = !this.drawerIdrsSubmenuOpen;
+  }
+
+  toggleDrawerItSupport() {
+    this.drawerItSupportOpen = !this.drawerItSupportOpen;
   }
 
   isActiveRoute(route: string): boolean {

@@ -65,7 +65,28 @@
     </div>
     
     <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">Whistleblower</a>
-    <a href="#" class="nav-link hover:text-[#af1f23] font-medium transition-colors">IT Support</a>
+    <!-- IT Support Dropdown -->
+    <div class="relative group"
+         (mouseenter)="onItSupportMouseEnter()"
+         (mouseleave)="onItSupportMouseLeave()">
+      <button class="nav-link hover:text-[#af1f23] font-medium transition-colors flex items-center gap-1">
+        IT Support
+        <svg class="w-4 h-4 transition-transform" [class.rotate-180]="navbarItSupportOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      <div *ngIf="navbarItSupportOpen"
+           (mouseenter)="onItDropdownMouseEnter()"
+           (mouseleave)="onItDropdownMouseLeave()"
+           class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl border border-gray-200 py-2 z-50">
+        <a href="#"
+           (click)="onMenuItemClick()"
+           class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Request & Approval</a>
+        <a href="#"
+           (click)="onMenuItemClick()"
+           class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-[#af1f23]">Secret</a>
+      </div>
+    </div>
   </nav>
   
   <!-- Desktop Right Section -->
@@ -161,7 +182,21 @@
       </div>
       
       <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">Whistleblower</a>
-      <a href="#" class="py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors">IT Support</a>
+      <!-- IT Support Accordion -->
+      <div class="border-b border-gray-200">
+        <button 
+          (click)="toggleDrawerItSupport()"
+          class="w-full py-3 px-4 rounded-lg hover:bg-[#af1f23] hover:text-white transition-colors flex items-center justify-between">
+          <span>IT Support</span>
+          <svg class="w-5 h-5 transition-transform" [class.rotate-180]="drawerItSupportOpen" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div *ngIf="drawerItSupportOpen" class="pl-4 space-y-1">
+          <a href="#" class="block py-2 px-4 text-sm hover:bg-[#af1f23] hover:text-white transition-colors">Request & Approval</a>
+          <a href="#" class="block py-2 px-4 text-sm hover:bg-[#af1f23] hover:text-white transition-colors">Secret</a>
+        </div>
+      </div>
     </nav>
     <div class="p-6 border-t">
       <button (click)="logout()" class="w-full py-3 bg-[#af1f23] text-white rounded-lg font-semibold hover:bg-[#d13a3e] transition-colors">

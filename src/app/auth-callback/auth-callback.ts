@@ -30,8 +30,9 @@ export class AuthCallbackComponent implements OnInit {
       this.error = null;
       const user = await this.authService.handleAuthCallback();
       if (user) {
-        // Show get-started guide modal for new users
-        this.showGetStartedGuide = true;
+        // Temporarily disable get-started modal and navigate directly
+        this.showGetStartedGuide = false;
+        this.router.navigate(['/dashboard']);
       } else {
         console.log('Authentication failed - no user returned');
         this.error = 'Authentication failed. Please try again.';
